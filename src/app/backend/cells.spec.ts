@@ -2,7 +2,7 @@ import {
   CellType,
   createCellInstanceFromString,
   determineCellTypeBasedOnValue,
-  determineDirectionBasedOnValue,
+  determineDirectionBasedOnValue, determineOppositeDirection,
   Direction,
   Enemy,
   Generator, Immobile,
@@ -35,5 +35,12 @@ describe('backend/cells', () => {
   it('CellType and Direction can be found based on the string value', () => {
     expect(determineCellTypeBasedOnValue('R')).toEqual(CellType.ROTATOR);
     expect(determineDirectionBasedOnValue('D')).toEqual(Direction.DOWN);
+  });
+
+  it('opposite direction is correctly determined', () => {
+    expect(determineOppositeDirection(Direction.UP)).toEqual(Direction.DOWN);
+    expect(determineOppositeDirection(Direction.DOWN)).toEqual(Direction.UP);
+    expect(determineOppositeDirection(Direction.LEFT)).toEqual(Direction.RIGHT);
+    expect(determineOppositeDirection(Direction.RIGHT)).toEqual(Direction.LEFT);
   });
 });
