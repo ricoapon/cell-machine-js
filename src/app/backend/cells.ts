@@ -20,6 +20,19 @@ export function determineOppositeDirection(direction: Direction): Direction {
   }
 }
 
+export function rotateDirectionClockwise(direction: Direction): Direction {
+  switch (direction) {
+    case Direction.RIGHT:
+      return Direction.DOWN;
+    case Direction.LEFT:
+      return Direction.UP;
+    case Direction.UP:
+      return Direction.RIGHT;
+    case Direction.DOWN:
+      return Direction.LEFT;
+  }
+}
+
 export enum CellType {
   MOVER = 'M',
   PUSH = 'P',

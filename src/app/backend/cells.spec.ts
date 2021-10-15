@@ -6,7 +6,7 @@ import {
   Direction,
   Enemy,
   Generator, Immobile,
-  Mover, Push, Rotator,
+  Mover, Push, rotateDirectionClockwise, Rotator,
   Slider
 } from './cells';
 
@@ -38,9 +38,13 @@ describe('backend/cells', () => {
   });
 
   it('opposite direction is correctly determined', () => {
-    expect(determineOppositeDirection(Direction.UP)).toEqual(Direction.DOWN);
-    expect(determineOppositeDirection(Direction.DOWN)).toEqual(Direction.UP);
-    expect(determineOppositeDirection(Direction.LEFT)).toEqual(Direction.RIGHT);
-    expect(determineOppositeDirection(Direction.RIGHT)).toEqual(Direction.LEFT);
+    expect(determineOppositeDirection(determineOppositeDirection(Direction.UP))).toEqual(Direction.UP);
+    expect(determineOppositeDirection(determineOppositeDirection(Direction.LEFT))).toEqual(Direction.LEFT);
+  });
+
+  it('clockwise rotation is correctly determined', () => {
+    expect(rotateDirectionClockwise(Direction.UP)).toEqual(Direction.RIGHT);
+    expect(rotateDirectionClockwise(rotateDirectionClockwise(rotateDirectionClockwise(rotateDirectionClockwise(Direction.UP)))))
+      .toEqual(Direction.UP);
   });
 });
