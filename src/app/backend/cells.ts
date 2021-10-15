@@ -60,7 +60,7 @@ export abstract class Cell {
   }
 }
 
-abstract class CellWithDirection extends Cell {
+export abstract class CellWithDirection extends Cell {
   private direction: Direction;
 
   constructor(direction: Direction) {
