@@ -1,17 +1,5 @@
 import {Board, Coordinate} from './board';
-import {
-  Cell,
-  CellType,
-  determineCellTypeBasedOnValue,
-  determineDirectionBasedOnValue,
-  Enemy,
-  Generator,
-  Immobile,
-  Mover,
-  Push,
-  Rotator,
-  Slider
-} from './cells';
+import {Cell, createCellInstanceFromString} from './cells';
 
 const EMPTY_CELL_CHAR = 'x';
 const SERIALIZATION_VERSION = '1';
@@ -92,6 +80,7 @@ export class BoardSerialization {
       const cellMatch = cellAsString.match(/^(\d+)(\w+)$/);
       const numberOfCells: number = +cellMatch[1];
       const cell = createCellInstanceFromString(cellMatch[2]);
+
       for (let i = 0; i < numberOfCells; i++) {
         board.setCell(cell, coordinates[count]);
         count++;
@@ -99,28 +88,6 @@ export class BoardSerialization {
     }
 
     return board;
-  }
-
-  private static createCellInstanceFromString(cell: string): Cell {
-    const cellMatch = cell.match(/(\w)(\w?)/);
-    const cellType = determineCellTypeBasedOnValue(cellMatch[1]);
-    const direction = determineDirectionBasedOnValue(cellMatch[2]);
-
-    if (CellType.MOVER === cellType) {
-      return new Mover(direction);
-    } else if (CellType.PUSH === cellType) {
-      return new Push();
-    } else if (CellType.SLIDER === cellType) {
-      return new Slider(direction);
-    } else if (CellType.ROTATOR === cellType) {
-      return new Rotator();
-    } else if (CellType.GENERATOR === cellType) {
-      return new Generator(direction);
-    } else if (CellType.IMMOBILE === cellType) {
-      return new Immobile();
-    } else if (CellType.ENEMY === cellType) {
-      return new Enemy();
-    }
   }
 
   /**

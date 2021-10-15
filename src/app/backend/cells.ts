@@ -92,3 +92,25 @@ export class Enemy extends Cell {
     return CellType.ENEMY;
   }
 }
+
+export function createCellInstanceFromString(cell: string): Cell {
+  const cellMatch = cell.match(/(\w)(\w?)/);
+  const cellType = determineCellTypeBasedOnValue(cellMatch[1]);
+  const direction = determineDirectionBasedOnValue(cellMatch[2]);
+
+  if (CellType.MOVER === cellType) {
+    return new Mover(direction);
+  } else if (CellType.PUSH === cellType) {
+    return new Push();
+  } else if (CellType.SLIDER === cellType) {
+    return new Slider(direction);
+  } else if (CellType.ROTATOR === cellType) {
+    return new Rotator();
+  } else if (CellType.GENERATOR === cellType) {
+    return new Generator(direction);
+  } else if (CellType.IMMOBILE === cellType) {
+    return new Immobile();
+  } else if (CellType.ENEMY === cellType) {
+    return new Enemy();
+  }
+}
