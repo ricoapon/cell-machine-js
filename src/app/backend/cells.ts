@@ -2,9 +2,35 @@ export enum Direction {
   UP = 'U', DOWN = 'D', LEFT = 'L', RIGHT = 'R'
 }
 
+export function determineDirectionBasedOnValue(value: string): Direction {
+  const invertedMap = new Map(Object.keys(Direction).map(key => [Direction[key], key]));
+  return Direction[invertedMap.get(value)];
+}
+
+export enum CellType {
+  MOVER = 'M',
+  PUSH = 'P',
+  SLIDER = 'S',
+  ROTATOR = 'R',
+  GENERATOR = 'G',
+  IMMOBILE = 'I',
+  ENEMY = 'E'
+}
+
+export function determineCellTypeBasedOnValue(value: string): CellType {
+  const invertedMap = new Map(Object.keys(CellType).map(key => [CellType[key], key]));
+  return CellType[invertedMap.get(value)];
+}
+
 export abstract class Cell {
+  abstract getCellType(): CellType;
+
   getDirection(): Direction {
     return undefined;
+  }
+
+  toString(): string {
+    return this.getCellType().toString() + (this.getDirection() === undefined ? '' : this.getDirection().toString());
   }
 }
 
@@ -25,10 +51,44 @@ abstract class CellWithDirection extends Cell {
   }
 }
 
-export class Mover extends CellWithDirection { }
-export class Push extends Cell { }
-export class Slider extends CellWithDirection { }
-export class Rotator extends Cell { }
-export class Generator extends CellWithDirection { }
-export class Immobile extends Cell { }
-export class Enemy extends Cell { }
+export class Mover extends CellWithDirection {
+  getCellType(): CellType {
+    return CellType.MOVER;
+  }
+}
+
+export class Push extends Cell {
+  getCellType(): CellType {
+    return CellType.PUSH;
+  }
+}
+
+export class Slider extends CellWithDirection {
+  getCellType(): CellType {
+    return CellType.SLIDER;
+  }
+}
+
+export class Rotator extends Cell {
+  getCellType(): CellType {
+    return CellType.ROTATOR;
+  }
+}
+
+export class Generator extends CellWithDirection {
+  getCellType(): CellType {
+    return CellType.GENERATOR;
+  }
+}
+
+export class Immobile extends Cell {
+  getCellType(): CellType {
+    return CellType.IMMOBILE;
+  }
+}
+
+export class Enemy extends Cell {
+  getCellType(): CellType {
+    return CellType.ENEMY;
+  }
+}
