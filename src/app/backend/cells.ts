@@ -49,6 +49,9 @@ export function determineCellTypeBasedOnValue(value: string): CellType {
 }
 
 export abstract class Cell {
+  /* Whether or not the cell is spawned this round and thus should not activate.*/
+  public isSpawnedThisRound = false;
+
   abstract getCellType(): CellType;
 
   getDirection(): Direction {
