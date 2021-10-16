@@ -9,6 +9,13 @@ import {CanvasCellImageCreator} from './canvas-cell-image-creator';
 export class CanvasDrawerFacade {
   readonly canvasCellCreator = CanvasCellImageCreator.instance;
   readonly canvas: fabric.Canvas;
+  private readonly callbackOnDragAndDrop: (oldCoordinate: Coordinate, newCoordinate: Coordinate) => void;
+
+  /**
+   * Events are triggered multiple times. To prevent callback being spammed, we ignore calls with an identical argument as the previous one.
+   * This variable stores the previous call.
+   */
+  private previousCallBackArguments: [Coordinate, Coordinate] = [null, null];
 
   // Fields that could be considered an input.
   gridCellSizeInPx = 50;
@@ -18,6 +25,7 @@ export class CanvasDrawerFacade {
   canvasHeight = this.gridCellSizeInPx * this.gridHeight;
 
   constructor(canvasId: string) {
+    this.callbackOnDragAndDrop = (oldCoordinate, newCoordinate) => console.log(oldCoordinate, newCoordinate);
     this.canvas = new fabric.Canvas(canvasId, {
       selection: false,
       preserveObjectStacking: true,
@@ -28,7 +36,8 @@ export class CanvasDrawerFacade {
     // Inspired by https://codepen.io/Ben_Tran/pen/YYYwNL.
     this.gridCellSizeInPx = gridCellSizeInPx;
     // Background color doesn't work as a property with tailwind it seems. So we have to set it manually using FabricJS.
-    this.canvas.setBackgroundColor('white', () => {});
+    this.canvas.setBackgroundColor('white', () => {
+    });
 
     // Snap to grid functionality.
     this.canvas.on('object:moving', (options) => {
@@ -37,6 +46,30 @@ export class CanvasDrawerFacade {
         top: Math.round(options.target.top / this.gridCellSizeInPx) * this.gridCellSizeInPx
       });
     });
+    this.canvas.on('object:moved', (options) => {
+      const original = options.transform.original;
+      const oldCoordinate = this.calculateCoordinate(original.left, original.top, original.angle);
+      const target = options.target;
+      const newCoordinate = this.calculateCoordinate(target.left, target.top, target.angle);
+
+      if (oldCoordinate.equals(newCoordinate)) {
+        return;
+      }
+
+      if (oldCoordinate.equals(this.previousCallBackArguments[0]) && newCoordinate.equals(this.previousCallBackArguments[1])) {
+        return;
+      }
+      this.callbackOnDragAndDrop(oldCoordinate, newCoordinate);
+      this.previousCallBackArguments = [oldCoordinate, newCoordinate];
+    });
+  }
+
+  private calculateCoordinate(left: number, top: number, angle: number): Coordinate {
+    // Because of the angle, left and top are skewed. Fix this by creating a rectangle in memory and rotating it back.
+    const boundaryRect = new fabric.Rect({left, top, angle, width: this.gridCellSizeInPx, height: this.gridCellSizeInPx});
+    boundaryRect.rotate(0);
+    // Add a rounding, because weirdly enough it might be slightly off (99 instead of 100).
+    return new Coordinate(Math.round(boundaryRect.left / this.gridCellSizeInPx), Math.round(boundaryRect.top / this.gridCellSizeInPx));
   }
 
   public clearBoard(): void {
@@ -47,7 +80,6 @@ export class CanvasDrawerFacade {
   }
 
   setSize(gridWidth: number, gridHeight: number): void {
-    console.log('Setting size with dimension', gridWidth, gridHeight);
     this.gridWidth = gridWidth;
     this.gridHeight = gridHeight;
     this.canvasWidth = this.gridCellSizeInPx * gridWidth;
