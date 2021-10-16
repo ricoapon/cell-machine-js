@@ -54,6 +54,10 @@ export class CanvasCellImageCreator {
    * @param gridCellSizeInPx The size of the grid.
    */
   public createImage(cellType: CellType, gridCellSizeInPx: number): Image {
+    const imageToClone = this.cells.get(cellType);
+    if (imageToClone == null) {
+      throw new Error('CanvasCellImageCreator is not yet initialized.');
+    }
     const image = fabric.util.object.clone(this.cells.get(cellType));
     // Images get their own width and height. To make sure it will fit in a cell with the correct size, we need to scale.
     image.scaleToWidth(gridCellSizeInPx);
