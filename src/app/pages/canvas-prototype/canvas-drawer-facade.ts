@@ -24,8 +24,8 @@ export class CanvasDrawerFacade {
   canvasWidth = this.gridCellSizeInPx * this.gridWidth;
   canvasHeight = this.gridCellSizeInPx * this.gridHeight;
 
-  constructor(canvasId: string) {
-    this.callbackOnDragAndDrop = (oldCoordinate, newCoordinate) => console.log(oldCoordinate, newCoordinate);
+  constructor(canvasId: string, callbackOnDragAndDrop: (oldCoordinate: Coordinate, newCoordinate: Coordinate) => void) {
+    this.callbackOnDragAndDrop = callbackOnDragAndDrop;
     this.canvas = new fabric.Canvas(canvasId, {
       selection: false,
       preserveObjectStacking: true,
