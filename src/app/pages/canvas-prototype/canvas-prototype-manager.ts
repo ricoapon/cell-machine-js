@@ -1,6 +1,5 @@
 import {Game} from '../../backend/game';
 import {CanvasDrawerFacade} from './canvas-drawer-facade';
-import {Board} from '../../backend/board';
 
 /**
  * Class to make handling the canvas easier.
@@ -22,23 +21,23 @@ export class CanvasPrototypeManager {
 
     const sizeMatch = size.match('^(\\d+),(\\d+)$');
 
-    this.game = new Game(+sizeMatch[1], +sizeMatch[2]);
+    this.game = new Game();
     this.canvasDrawerFacade.initializeCanvas(this.gridCellSizeInPx, +sizeMatch[1]);
-    this.game.setBoardFromString(boardAsString);
-    this.redrawBoard(this.game.getBoard());
+    this.game.readBoardFromString(boardAsString);
+    this.redrawBoard(this.game);
   }
 
-  private redrawBoard(board: Board): void {
+  private redrawBoard(game: Game): void {
     this.canvasDrawerFacade.clearBoard();
-    this.canvasDrawerFacade.drawBuildArea(board.getBuildArea());
-    for (const coordinate of board.getAllCoordinates()) {
-      this.canvasDrawerFacade.drawCell(board.getCell(coordinate), coordinate, board.getBuildArea().contains(coordinate));
+    this.canvasDrawerFacade.drawBuildArea(game.getBuildArea());
+    for (const coordinate of game.getAllCoordinates()) {
+      this.canvasDrawerFacade.drawCell(game.getCell(coordinate), coordinate, game.getBuildArea().contains(coordinate));
     }
   }
 
   doStep(): void {
     this.game.doStep();
-    this.redrawBoard(this.game.getBoard());
+    this.redrawBoard(this.game);
   }
 
   getBoardAsString(): string {

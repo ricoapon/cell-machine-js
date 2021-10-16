@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Game} from '../../backend/game';
-import {Board, Coordinate} from '../../backend/board';
+import {Coordinate} from '../../backend/board';
 import {Cell, CellType, CellWithDirection, Direction} from '../../backend/cells';
 
 @Component({
@@ -26,23 +26,16 @@ export class CssGridPrototypeComponent implements OnInit {
   }
 
   initializeGame(): void {
-    // Determine the size of the game before reading the string.
-    // A bit weird to do so, but that is just a prototype.
-    const boardAsStringSplit = this.boardAsStringInput.split('/');
-    const size = boardAsStringSplit[1];
-
-    const sizeMatch = size.match('^(\\d+),(\\d+)$');
-
-    this.game = new Game(+sizeMatch[1], +sizeMatch[2]);
-    this.game.setBoardFromString(this.boardAsStringInput);
+    this.game = new Game();
+    this.game.readBoardFromString(this.boardAsStringInput);
   }
 
   getCoordinates(): Array<Coordinate> {
-    return this.game.getBoard().getAllCoordinates();
+    return this.game.getAllCoordinates();
   }
 
   determineClassForCell(coordinate: Coordinate): string[] {
-    const cell = this.game.getBoard().getCell(coordinate);
+    const cell = this.game.getCell(coordinate);
     if (cell == null) {
       return ['bg-empty'];
     }
@@ -93,8 +86,8 @@ export class CssGridPrototypeComponent implements OnInit {
 
   determineGridSize(): any {
     return {
-      'grid-template-columns': 'repeat(' + this.game.getBoard().width + ', 50px)',
-      'grid-template-rows': 'repeat('  + this.game.getBoard().height + ', 50px)',
+      'grid-template-columns': 'repeat(' + this.game.getWidth() + ', 50px)',
+      'grid-template-rows': 'repeat(' + this.game.getHeight() + ', 50px)',
     };
   }
 }
