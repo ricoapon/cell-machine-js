@@ -62,8 +62,8 @@ export class CanvasDrawerFacade {
     const buildAreaRect = new fabric.Rect({
       top: buildArea.topLeftCoordinate.x * this.gridCellSizeInPx,
       left: buildArea.topLeftCoordinate.y * this.gridCellSizeInPx,
-      width: (buildArea.bottomRightCoordinate.x - buildArea.topLeftCoordinate.x + 1) * this.gridCellSizeInPx,
-      height: (buildArea.bottomRightCoordinate.y - buildArea.topLeftCoordinate.y + 1) * this.gridCellSizeInPx,
+      height: (buildArea.bottomRightCoordinate.x - buildArea.topLeftCoordinate.x + 1) * this.gridCellSizeInPx,
+      width: (buildArea.bottomRightCoordinate.y - buildArea.topLeftCoordinate.y + 1) * this.gridCellSizeInPx,
       fill: 'green',
       lockMovementY: true,
       lockMovementX: true,
@@ -75,13 +75,20 @@ export class CanvasDrawerFacade {
   }
 
   public drawCell(cell: Cell, coordinate: Coordinate, draggable: boolean): void {
+    const coordinateAsText = new fabric.Text(coordinate.toString(), {
+      left: coordinate.x * this.gridCellSizeInPx,
+      top: coordinate.y * this.gridCellSizeInPx,
+      fontSize: 20,
+    });
+    this.canvas.add(coordinateAsText);
+
     if (cell == null) {
       return;
     }
     const img = this.canvasCellCreator.createImage(cell.getCellType(), this.gridCellSizeInPx);
     img.set({
-      top: coordinate.x * this.gridCellSizeInPx,
-      left: coordinate.y * this.gridCellSizeInPx,
+      left: coordinate.x * this.gridCellSizeInPx,
+      top: coordinate.y * this.gridCellSizeInPx,
     });
 
     if (!draggable) {

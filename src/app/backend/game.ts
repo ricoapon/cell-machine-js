@@ -201,13 +201,13 @@ export class Game {
   private determineCoordinateInDirection(coordinate: Coordinate, direction: Direction): Coordinate | null {
     let newCoordinate: Coordinate;
     if (Direction.UP === direction) {
-      newCoordinate = new Coordinate(coordinate.x - 1, coordinate.y);
-    } else if (Direction.DOWN === direction) {
-      newCoordinate = new Coordinate(coordinate.x + 1, coordinate.y);
-    } else if (Direction.LEFT === direction) {
       newCoordinate = new Coordinate(coordinate.x, coordinate.y - 1);
-    } else if (Direction.RIGHT === direction) {
+    } else if (Direction.DOWN === direction) {
       newCoordinate = new Coordinate(coordinate.x, coordinate.y + 1);
+    } else if (Direction.LEFT === direction) {
+      newCoordinate = new Coordinate(coordinate.x - 1, coordinate.y);
+    } else if (Direction.RIGHT === direction) {
+      newCoordinate = new Coordinate(coordinate.x + 1, coordinate.y);
     }
 
     if (!this.board.containsCoordinate(newCoordinate)) {
