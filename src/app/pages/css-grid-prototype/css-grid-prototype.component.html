@@ -1,1 +1,7 @@
-<p>css-grid-prototype works!</p>
+<div class="container">
+  <div *ngFor="let coordinate of getCoordinates()" class="cell" [ngClass]="determineClassForCell(coordinate)">
+
+  </div>
+</div>
+
+<button (click)="doStep()">Do step</button>

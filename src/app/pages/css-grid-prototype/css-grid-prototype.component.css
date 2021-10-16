@@ -1,0 +1,63 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(6, 50px);
+  grid-template-rows: repeat(6, 50px);
+}
+
+.cell {
+  background-color: white;
+  border: solid 1px grey;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg-empty {
+  background-image: none;
+}
+.bg-enemy {
+  background-image: url("/assets/cells/enemy.svg");
+}
+.bg-generator {
+  background-image: url("/assets/cells/generator.svg");
+}
+.bg-immobile {
+  background-image: url("/assets/cells/immobile.svg");
+}
+.bg-mover {
+  background-image: url("/assets/cells/mover.svg");
+}
+.bg-push {
+  background-image: url("/assets/cells/push.svg");
+}
+.bg-rotator {
+  background-image: url("/assets/cells/rotator.svg");
+}
+.bg-slider {
+  background-image: url("/assets/cells/slider.svg");
+}
+
+.rotate-up {
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+}
+.rotate-down {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+.rotate-left {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.rotate-right {
+  /* This is the default, so we don't need to do anything. */
+}
