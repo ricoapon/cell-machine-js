@@ -54,6 +54,12 @@ export class CanvasDrawerFacade {
           top: oldLeftTop[1],
         });
 
+        // There is some weird fabric bug that you can keep dragging a block where it is not draggable. Setting the zoom 'resets' the canvas
+        // dragging part. This fixes the issue. To reproduce without this line: drag a square outside the build area. Keep the mouse inside
+        // the same place, the cell snaps back. Without having moved the mouse, you should see a drag pointer. You can still drag when you
+        // click.
+        this.canvas.setZoom(1);
+
         return;
       }
 
