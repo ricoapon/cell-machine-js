@@ -1,6 +1,14 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CanvasPrototypeComponent } from './canvas-prototype.component';
+import {CanvasPrototypeComponent} from './canvas-prototype.component';
+import {CanvasCellImageCreator} from './canvas-cell-image-creator';
+import {ApplicationInitStatus} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+
+beforeAll(async () => {
+  // The initialize method returns a method to initialize, so we need to actually call it.
+  await CanvasCellImageCreator.createInitializeCanvasCellImageCreatorMethod().call(null);
+});
 
 describe('CanvasPrototypeComponent', () => {
   let component: CanvasPrototypeComponent;
@@ -8,9 +16,10 @@ describe('CanvasPrototypeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CanvasPrototypeComponent ]
+      declarations: [CanvasPrototypeComponent],
+      imports: [FormsModule]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

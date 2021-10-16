@@ -1,1 +1,7 @@
-<p>canvas-prototype works!</p>
+<input type="text" class="text-black w-72" [(ngModel)]="boardAsStringInput" /><button (click)="initializeGame()">Import board</button>
+
+<canvas id="game-canvas">
+</canvas>
+<button (click)="doStep()">Do step</button>
+<br/><br/><br/>
+<button routerLink="../">Back</button>

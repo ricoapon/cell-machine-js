@@ -8,6 +8,10 @@ export class Coordinate {
     this.x = x;
     this.y = y;
   }
+
+  toString(): string {
+    return '(' + this.x + ',' + this.y + ')';
+  }
 }
 
 export class RectangularArea {
@@ -17,6 +21,11 @@ export class RectangularArea {
   constructor(topLeftCoordinate: Coordinate, bottomRightCoordinate: Coordinate) {
     this.topLeftCoordinate = topLeftCoordinate;
     this.bottomRightCoordinate = bottomRightCoordinate;
+  }
+
+  contains(coordinate: Coordinate): boolean {
+    return this.topLeftCoordinate.x <= coordinate.x && coordinate.x <= this.bottomRightCoordinate.x &&
+      this.topLeftCoordinate.y <= coordinate.y && coordinate.y <= this.bottomRightCoordinate.y;
   }
 }
 
@@ -63,13 +72,13 @@ export class Board {
 
   /**
    * Returns a list of all coordinates that are on the board, where the order of the coordinates is from the top left to the bottom right,
-   * top to bottom.
+   * left to right.
    */
   public getAllCoordinates(): Array<Coordinate> {
     const result = new Array<Coordinate>();
-    for (let i = 0; i < this.width; i++) {
-      for (let j = 0; j < this.height; j++) {
-        result.push(new Coordinate(i, j));
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        result.push(new Coordinate(x, y));
       }
     }
     return result;
