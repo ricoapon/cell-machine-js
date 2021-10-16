@@ -116,13 +116,6 @@ export class CanvasDrawerFacade {
   }
 
   public drawCell(cell: Cell, coordinate: Coordinate, draggable: boolean): void {
-    const coordinateAsText = new fabric.Text(coordinate.toString(), {
-      left: coordinate.x * this.gridCellSizeInPx,
-      top: coordinate.y * this.gridCellSizeInPx,
-      fontSize: 20,
-    });
-    this.canvas.add(coordinateAsText);
-
     if (cell == null) {
       return;
     }
