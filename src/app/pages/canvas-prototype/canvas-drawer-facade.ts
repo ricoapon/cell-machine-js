@@ -12,9 +12,10 @@ export class CanvasDrawerFacade {
 
   // Fields that could be considered an input.
   gridCellSizeInPx = 50;
-  gridSideLength = 6;
-  canvasWidth = this.gridCellSizeInPx * this.gridSideLength;
-  canvasHeight = this.gridCellSizeInPx * this.gridSideLength;
+  gridWidth = 6;
+  gridHeight = 6;
+  canvasWidth = this.gridCellSizeInPx * this.gridWidth;
+  canvasHeight = this.gridCellSizeInPx * this.gridHeight;
 
   constructor(canvasId: string) {
     this.canvas = new fabric.Canvas(canvasId, {
@@ -23,24 +24,11 @@ export class CanvasDrawerFacade {
     });
   }
 
-  public initializeCanvas(gridCellSizeInPx: number, gridSideLength: number): void {
+  public initializeCanvas(gridCellSizeInPx: number): void {
     // Inspired by https://codepen.io/Ben_Tran/pen/YYYwNL.
     this.gridCellSizeInPx = gridCellSizeInPx;
-    this.gridSideLength = gridSideLength;
-    this.canvasWidth = gridCellSizeInPx * gridSideLength;
-    this.canvasHeight = gridCellSizeInPx * gridSideLength;
-    this.canvas.setWidth(this.canvasWidth);
-    this.canvas.setHeight(this.canvasHeight);
     // Background color doesn't work as a property with tailwind it seems. So we have to set it manually using FabricJS.
     this.canvas.setBackgroundColor('white', () => {});
-
-    // Create grid lines.
-    for (let i = 0; i < (this.canvasWidth / this.gridCellSizeInPx); i++) {
-      this.canvas.add(new fabric.Line([i * this.gridCellSizeInPx, 0, i * this.gridCellSizeInPx, this.canvasHeight],
-        {type: 'line', stroke: '#000', selectable: false, hoverCursor: 'default'}));
-      this.canvas.add(new fabric.Line([0, i * this.gridCellSizeInPx, this.canvasWidth, i * this.gridCellSizeInPx],
-        {type: 'line', stroke: '#000', selectable: false, hoverCursor: 'default'}));
-    }
 
     // Snap to grid functionality.
     this.canvas.on('object:moving', (options) => {
@@ -55,7 +43,28 @@ export class CanvasDrawerFacade {
     // Clear everything has been drawn or added as event.
     this.canvas.clear();
     // Initialize the way we would always initialize.
-    this.initializeCanvas(this.gridCellSizeInPx, this.gridSideLength);
+    this.initializeCanvas(this.gridCellSizeInPx);
+  }
+
+  setSize(gridWidth: number, gridHeight: number): void {
+    console.log('Setting size with dimension', gridWidth, gridHeight);
+    this.gridWidth = gridWidth;
+    this.gridHeight = gridHeight;
+    this.canvasWidth = this.gridCellSizeInPx * gridWidth;
+    this.canvasHeight = this.gridCellSizeInPx * gridHeight;
+    this.canvas.setWidth(this.canvasWidth);
+    this.canvas.setHeight(this.canvasHeight);
+
+    // Draw horizontal grid lines.
+    for (let i = 0; i < this.gridHeight; i++) {
+      this.canvas.add(new fabric.Line([0, i * this.gridCellSizeInPx, this.canvasWidth, i * this.gridCellSizeInPx],
+        {type: 'line', stroke: 'green', selectable: false, hoverCursor: 'default'}));
+    }
+    // Draw vertical grid lines.
+    for (let i = 0; i < (this.canvasWidth / this.gridCellSizeInPx); i++) {
+      this.canvas.add(new fabric.Line([i * this.gridCellSizeInPx, 0, i * this.gridCellSizeInPx, this.canvasHeight],
+        {type: 'line', stroke: '#000', selectable: false, hoverCursor: 'default'}));
+    }
   }
 
   public drawBuildArea(buildArea: RectangularArea): void {

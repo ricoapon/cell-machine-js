@@ -15,7 +15,7 @@ export class CanvasPrototypeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.canvasPrototypeManager = new CanvasPrototypeManager('game-canvas', 50, 6);
+    this.canvasPrototypeManager = new CanvasPrototypeManager('game-canvas', 50);
     this.initializeGame();
   }
 

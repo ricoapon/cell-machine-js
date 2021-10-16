@@ -8,27 +8,21 @@ export class CanvasPrototypeManager {
   private canvasDrawerFacade: CanvasDrawerFacade;
   private game: Game;
 
-  constructor(canvasId: string, private gridCellSizeInPx: number, gridSideLength: number) {
+  constructor(canvasId: string, private gridCellSizeInPx: number) {
     this.canvasDrawerFacade = new CanvasDrawerFacade(canvasId);
-    this.canvasDrawerFacade.initializeCanvas(gridCellSizeInPx, gridSideLength);
+    this.canvasDrawerFacade.initializeCanvas(gridCellSizeInPx);
   }
 
   public initializeFromString(boardAsString: string): void {
-    // Determine the size of the game before reading the string.
-    // A bit weird to do so, but that is just a prototype.
-    const boardAsStringSplit = boardAsString.split('/');
-    const size = boardAsStringSplit[1];
-
-    const sizeMatch = size.match('^(\\d+),(\\d+)$');
-
     this.game = new Game();
-    this.canvasDrawerFacade.initializeCanvas(this.gridCellSizeInPx, +sizeMatch[1]);
+    this.canvasDrawerFacade.initializeCanvas(this.gridCellSizeInPx);
     this.game.readBoardFromString(boardAsString);
     this.redrawBoard(this.game);
   }
 
   private redrawBoard(game: Game): void {
     this.canvasDrawerFacade.clearBoard();
+    this.canvasDrawerFacade.setSize(game.getWidth(), game.getHeight());
     this.canvasDrawerFacade.drawBuildArea(game.getBuildArea());
     for (const coordinate of game.getAllCoordinates()) {
       this.canvasDrawerFacade.drawCell(game.getCell(coordinate), coordinate, game.getBuildArea().contains(coordinate));
