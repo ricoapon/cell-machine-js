@@ -23,6 +23,7 @@ export class CanvasDrawerFacade {
   gridHeight = 6;
   canvasWidth = this.gridCellSizeInPx * this.gridWidth;
   canvasHeight = this.gridCellSizeInPx * this.gridHeight;
+  buildArea: RectangularArea;
 
   constructor(canvasId: string, callbackOnDragAndDrop: (oldCoordinate: Coordinate, newCoordinate: Coordinate) => void) {
     this.callbackOnDragAndDrop = callbackOnDragAndDrop;
@@ -39,31 +40,34 @@ export class CanvasDrawerFacade {
     this.canvas.setBackgroundColor('white', () => {
     });
 
-    // Snap to grid functionality.
-    this.canvas.on('object:moving', (options) => {
-      // Get the coordinate that the mouse is in.
-      const mouseCoordinate = new Coordinate(Math.floor(options.pointer.x / this.gridCellSizeInPx),
-        Math.floor(options.pointer.y / this.gridCellSizeInPx));
-      const leftTop = this.calculateAngledLeftTop(mouseCoordinate, options.target.angle);
-      // Move the target cell back into the grid.
-      options.target.set({
-        left: leftTop[0],
-        top: leftTop[1],
-      });
-    });
     this.canvas.on('object:moved', (options) => {
       const original = options.transform.original;
       const oldCoordinate = this.calculateCoordinate(original.left, original.top, original.angle);
       const target = options.target;
       const newCoordinate = this.calculateCoordinate(target.left, target.top, target.angle);
 
-      if (oldCoordinate.equals(newCoordinate)) {
+      if (oldCoordinate.equals(newCoordinate) || !this.buildArea.contains(newCoordinate)) {
+        // The square has moved, so drag it back into its old position.
+        const oldLeftTop = this.calculateAngledLeftTop(oldCoordinate, options.target.angle);
+        options.target.set({
+          left: oldLeftTop[0],
+          top: oldLeftTop[1],
+        });
+
         return;
       }
 
       if (oldCoordinate.equals(this.previousCallBackArguments[0]) && newCoordinate.equals(this.previousCallBackArguments[1])) {
         return;
       }
+
+      // Place the square in the actual grid.
+      const newLeftTop = this.calculateAngledLeftTop(newCoordinate, options.target.angle);
+      options.target.set({
+        left: newLeftTop[0],
+        top: newLeftTop[1],
+      });
+
       this.callbackOnDragAndDrop(oldCoordinate, newCoordinate);
       this.previousCallBackArguments = [oldCoordinate, newCoordinate];
     });
@@ -122,6 +126,7 @@ export class CanvasDrawerFacade {
   }
 
   public drawBuildArea(buildArea: RectangularArea): void {
+    this.buildArea = buildArea;
     const buildAreaRect = new fabric.Rect({
       top: buildArea.topLeftCoordinate.x * this.gridCellSizeInPx,
       left: buildArea.topLeftCoordinate.y * this.gridCellSizeInPx,
