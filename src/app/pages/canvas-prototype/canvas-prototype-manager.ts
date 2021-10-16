@@ -39,4 +39,8 @@ export class CanvasPrototypeManager {
     this.game.doStep();
     this.redrawBoard(this.game.getBoard());
   }
+
+  getBoardAsString(): string {
+    return this.game.getBoardAsString();
+  }
 }
