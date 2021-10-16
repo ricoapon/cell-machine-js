@@ -41,9 +41,14 @@ export class CanvasDrawerFacade {
 
     // Snap to grid functionality.
     this.canvas.on('object:moving', (options) => {
+      // Get the coordinate that the mouse is in.
+      const mouseCoordinate = new Coordinate(Math.floor(options.pointer.x / this.gridCellSizeInPx),
+        Math.floor(options.pointer.y / this.gridCellSizeInPx));
+      const leftTop = this.calculateAngledLeftTop(mouseCoordinate, options.target.angle);
+      // Move the target cell back into the grid.
       options.target.set({
-        left: Math.round(options.target.left / this.gridCellSizeInPx) * this.gridCellSizeInPx,
-        top: Math.round(options.target.top / this.gridCellSizeInPx) * this.gridCellSizeInPx
+        left: leftTop[0],
+        top: leftTop[1],
       });
     });
     this.canvas.on('object:moved', (options) => {
@@ -70,6 +75,23 @@ export class CanvasDrawerFacade {
     boundaryRect.rotate(0);
     // Add a rounding, because weirdly enough it might be slightly off (99 instead of 100).
     return new Coordinate(Math.round(boundaryRect.left / this.gridCellSizeInPx), Math.round(boundaryRect.top / this.gridCellSizeInPx));
+  }
+
+  /**
+   * Returns the left and top for a cell on a given coordinate that is rotated with given angle.
+   * @param coordinate The coordinate to place the cell.
+   * @param angle The angle of the cell.
+   * @private
+   */
+  private calculateAngledLeftTop(coordinate: Coordinate, angle: number): [number, number] {
+    const boundaryRect = new fabric.Rect({
+      left: coordinate.x * this.gridCellSizeInPx,
+      top: coordinate.y * this.gridCellSizeInPx,
+      angle: 0, width: this.gridCellSizeInPx,
+      height: this.gridCellSizeInPx
+    });
+    boundaryRect.rotate(angle);
+    return [boundaryRect.left, boundaryRect.top];
   }
 
   public clearBoard(): void {
