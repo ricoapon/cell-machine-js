@@ -1,6 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CssGridPrototypeComponent } from './css-grid-prototype.component';
+import {CssGridPrototypeComponent} from './css-grid-prototype.component';
+import {FormsModule} from '@angular/forms';
 
 describe('CssGridPrototypeComponent', () => {
   let component: CssGridPrototypeComponent;
@@ -8,9 +9,10 @@ describe('CssGridPrototypeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CssGridPrototypeComponent ]
+      declarations: [CssGridPrototypeComponent],
+      imports: [FormsModule]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
