@@ -1,1 +1,10 @@
-<p>css-grid-prototype works!</p>
+<input type="text" class="text-black w-72" [(ngModel)]="boardAsStringInput" /><button (click)="initializeGame()">Import board</button>
+<div class="container" [ngStyle]="determineGridSize()">
+  <div *ngFor="let coordinate of getCoordinates()" class="cell" [ngClass]="determineClassForCell(coordinate)">
+
+  </div>
+</div>
+
+<button (click)="doStep()">Do step</button>
+<br/><br/><br/>
+<button routerLink="../">Back</button>
