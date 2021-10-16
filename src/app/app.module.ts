@@ -6,6 +6,7 @@ import {AppRoutingModule} from './app-routing.module';
 import { MenuScreenComponent } from './pages/menu-screen/menu-screen.component';
 import { CanvasPrototypeComponent } from './pages/canvas-prototype/canvas-prototype.component';
 import { CssGridPrototypeComponent } from './pages/css-grid-prototype/css-grid-prototype.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { CssGridPrototypeComponent } from './pages/css-grid-prototype/css-grid-p
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

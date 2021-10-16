@@ -11,17 +11,23 @@ import {Cell, CellType, CellWithDirection, Direction} from '../../backend/cells'
 export class CssGridPrototypeComponent implements OnInit {
   private game: Game;
 
+  boardAsStringInput = '1/6,6/0,0-0,1/1x1MD4x1R29x';
+
   constructor() {
   }
 
   doStep(): void {
     this.game.doStep();
+    this.boardAsStringInput = this.game.getBoardAsString();
   }
 
   ngOnInit(): void {
-    // Add a test game.
+    this.initializeGame();
+  }
+
+  initializeGame(): void {
     this.game = new Game(6, 6);
-    this.game.setBoardFromString('1/6,6/0,0-0,1/1x1MD4x1R29x');
+    this.game.setBoardFromString(this.boardAsStringInput);
   }
 
   getCoordinates(): Array<Coordinate> {
@@ -77,4 +83,5 @@ export class CssGridPrototypeComponent implements OnInit {
         return 'rotate-right';
     }
   }
+
 }

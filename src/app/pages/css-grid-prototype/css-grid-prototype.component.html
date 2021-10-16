@@ -1,3 +1,4 @@
+<input type="text" class="text-black w-72" [(ngModel)]="boardAsStringInput" /><button (click)="initializeGame()">Import board</button>
 <div class="container">
   <div *ngFor="let coordinate of getCoordinates()" class="cell" [ngClass]="determineClassForCell(coordinate)">
 
