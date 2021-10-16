@@ -18,6 +18,11 @@ export class RectangularArea {
     this.topLeftCoordinate = topLeftCoordinate;
     this.bottomRightCoordinate = bottomRightCoordinate;
   }
+
+  contains(coordinate: Coordinate): boolean {
+    return this.topLeftCoordinate.x <= coordinate.x && coordinate.x <= this.bottomRightCoordinate.x &&
+      this.topLeftCoordinate.y <= coordinate.y && coordinate.y <= this.bottomRightCoordinate.y;
+  }
 }
 
 export class Board {

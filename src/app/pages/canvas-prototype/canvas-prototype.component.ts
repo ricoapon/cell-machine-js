@@ -8,7 +8,7 @@ import {CanvasPrototypeManager} from './canvas-prototype-manager';
 })
 export class CanvasPrototypeComponent implements OnInit {
   canvasPrototypeManager: CanvasPrototypeManager;
-  boardAsStringInput = '1/6,6/0,0-0,1/1x1MD4x1R29x';
+  boardAsStringInput = '1/6,6/0,0-2,2/1x1MD2x1ML1x1R29x';
 
   constructor() {
   }

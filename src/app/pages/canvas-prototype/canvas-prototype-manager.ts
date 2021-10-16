@@ -30,8 +30,9 @@ export class CanvasPrototypeManager {
 
   private redrawBoard(board: Board): void {
     this.canvasDrawerFacade.clearBoard();
-    for (const coordinate of this.game.getBoard().getAllCoordinates()) {
-      this.canvasDrawerFacade.drawCell(this.game.getBoard().getCell(coordinate), coordinate);
+    this.canvasDrawerFacade.drawBuildArea(board.getBuildArea());
+    for (const coordinate of board.getAllCoordinates()) {
+      this.canvasDrawerFacade.drawCell(board.getCell(coordinate), coordinate, board.getBuildArea().contains(coordinate));
     }
   }
 

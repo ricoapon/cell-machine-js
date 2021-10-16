@@ -1,5 +1,5 @@
 import {fabric} from 'fabric';
-import {Coordinate} from '../../backend/board';
+import {Coordinate, RectangularArea} from '../../backend/board';
 import {Cell, CellWithDirection, Direction} from '../../backend/cells';
 import {CanvasCellImageCreator} from './canvas-cell-image-creator';
 
@@ -58,7 +58,23 @@ export class CanvasDrawerFacade {
     this.initializeCanvas(this.gridCellSizeInPx, this.gridSideLength);
   }
 
-  public drawCell(cell: Cell, coordinate: Coordinate): void {
+  public drawBuildArea(buildArea: RectangularArea): void {
+    const buildAreaRect = new fabric.Rect({
+      top: buildArea.topLeftCoordinate.x * this.gridCellSizeInPx,
+      left: buildArea.topLeftCoordinate.y * this.gridCellSizeInPx,
+      width: (buildArea.bottomRightCoordinate.x - buildArea.topLeftCoordinate.x + 1) * this.gridCellSizeInPx,
+      height: (buildArea.bottomRightCoordinate.y - buildArea.topLeftCoordinate.y + 1) * this.gridCellSizeInPx,
+      fill: 'green',
+      lockMovementY: true,
+      lockMovementX: true,
+      hoverCursor: 'default',
+      selectable: false,
+    });
+    this.canvas.add(buildAreaRect);
+    this.canvas.sendToBack(buildAreaRect);
+  }
+
+  public drawCell(cell: Cell, coordinate: Coordinate, draggable: boolean): void {
     if (cell == null) {
       return;
     }
@@ -67,6 +83,16 @@ export class CanvasDrawerFacade {
       top: coordinate.x * this.gridCellSizeInPx,
       left: coordinate.y * this.gridCellSizeInPx,
     });
+
+    if (!draggable) {
+      img.set({
+        lockMovementY: true,
+        lockMovementX: true,
+        hoverCursor: 'default',
+        selectable: false,
+      });
+    }
+
     img.rotate(this.determineRotationAngle(cell));
     this.canvas.add(img);
   }
