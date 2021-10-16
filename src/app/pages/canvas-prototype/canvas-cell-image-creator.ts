@@ -15,14 +15,14 @@ export class CanvasCellImageCreator {
 
   readonly cells: Map<CellType, Image>;
 
-  public static initializeCanvasCellCreator(): () => Promise<void> {
+  public static createInitializeCanvasCellImageCreatorMethod(): () => Promise<void> {
     return () => {
       return CanvasCellImageCreator.instance.initializeImageVariables();
     };
   }
 
   async initializeImageVariables(): Promise<void> {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       let count = 0;
       const loaded = () => {
         count++;
@@ -31,18 +31,21 @@ export class CanvasCellImageCreator {
         }
       };
 
-      this.initializeImageVariable(CellType.ENEMY, 'assets/cells/enemy.svg', loaded);
-      this.initializeImageVariable(CellType.GENERATOR, 'assets/cells/generator.svg', loaded);
-      this.initializeImageVariable(CellType.IMMOBILE, 'assets/cells/immobile.svg', loaded);
-      this.initializeImageVariable(CellType.MOVER, 'assets/cells/mover.svg', loaded);
-      this.initializeImageVariable(CellType.PUSH, 'assets/cells/push.svg', loaded);
-      this.initializeImageVariable(CellType.ROTATOR, 'assets/cells/rotator.svg', loaded);
-      this.initializeImageVariable(CellType.SLIDER, 'assets/cells/slider.svg', loaded);
+      this.initializeImageVariable(CellType.ENEMY, 'http://localhost:9876/assets/cells/enemy.svg', loaded, reject);
+      this.initializeImageVariable(CellType.GENERATOR, 'assets/cells/generator.svg', loaded, reject);
+      this.initializeImageVariable(CellType.IMMOBILE, 'assets/cells/immobile.svg', loaded, reject);
+      this.initializeImageVariable(CellType.MOVER, 'assets/cells/mover.svg', loaded, reject);
+      this.initializeImageVariable(CellType.PUSH, 'assets/cells/push.svg', loaded, reject);
+      this.initializeImageVariable(CellType.ROTATOR, 'assets/cells/rotator.svg', loaded, reject);
+      this.initializeImageVariable(CellType.SLIDER, 'assets/cells/slider.svg', loaded, reject);
     });
   }
 
-  private initializeImageVariable(cellType: CellType, url: string, callback: () => void): void {
+  private initializeImageVariable(cellType: CellType, url: string, callback: () => void, reject: () => void): void {
     fabric.Image.fromURL(url, (img: Image) => {
+      if (img == null) {
+        reject();
+      }
       this.cells.set(cellType, img);
       callback();
     });

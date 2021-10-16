@@ -21,7 +21,7 @@ import {CanvasCellImageCreator} from './pages/canvas-prototype/canvas-cell-image
     AppRoutingModule,
     FormsModule
   ],
-  providers: [{provide: APP_INITIALIZER, useFactory: CanvasCellImageCreator.initializeCanvasCellCreator, multi: true}],
+  providers: [{provide: APP_INITIALIZER, useFactory: CanvasCellImageCreator.createInitializeCanvasCellImageCreatorMethod, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
