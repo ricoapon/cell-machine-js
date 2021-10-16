@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -7,6 +7,7 @@ import { MenuScreenComponent } from './pages/menu-screen/menu-screen.component';
 import { CanvasPrototypeComponent } from './pages/canvas-prototype/canvas-prototype.component';
 import { CssGridPrototypeComponent } from './pages/css-grid-prototype/css-grid-prototype.component';
 import {FormsModule} from '@angular/forms';
+import {CanvasCellImageCreator} from './pages/canvas-prototype/canvas-cell-image-creator';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import {FormsModule} from '@angular/forms';
     AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  providers: [{provide: APP_INITIALIZER, useFactory: CanvasCellImageCreator.initializeCanvasCellCreator, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
