@@ -31,6 +31,23 @@ export class Game {
     return BoardSerialization.serialize(this.board);
   }
 
+  moveCellInsideBuildArea(oldCoordinate: Coordinate, newCoordinate: Coordinate): void {
+    if (!this.board.getBuildArea().contains(oldCoordinate) || !this.board.getBuildArea().contains(newCoordinate)) {
+      throw new Error('Cannot move cells outside the build area');
+    }
+
+    if (this.board.getCell(oldCoordinate) == null) {
+      throw new Error('Cannot move empty cells');
+    }
+
+    if (this.board.getCell(newCoordinate) != null) {
+      throw new Error('Cannot move cell on top of another cell');
+    }
+
+    this.board.setCell(this.board.getCell(oldCoordinate), newCoordinate);
+    this.board.setCell(null, oldCoordinate);
+  }
+
   getCell(coordinate: Coordinate): Cell {
     return this.board.getCell(coordinate);
   }
