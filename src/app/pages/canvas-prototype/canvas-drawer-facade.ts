@@ -90,7 +90,7 @@ export class CanvasDrawerFacade {
     // Draw horizontal grid lines.
     for (let i = 0; i < this.gridHeight; i++) {
       this.canvas.add(new fabric.Line([0, i * this.gridCellSizeInPx, this.canvasWidth, i * this.gridCellSizeInPx],
-        {type: 'line', stroke: 'green', selectable: false, hoverCursor: 'default'}));
+        {type: 'line', stroke: '#000', selectable: false, hoverCursor: 'default'}));
     }
     // Draw vertical grid lines.
     for (let i = 0; i < (this.canvasWidth / this.gridCellSizeInPx); i++) {
