@@ -134,10 +134,10 @@ export class CanvasDrawerFacade {
   public drawBuildArea(buildArea: RectangularArea): void {
     this.buildArea = buildArea;
     const buildAreaRect = new fabric.Rect({
-      top: buildArea.topLeftCoordinate.x * this.gridCellSizeInPx,
-      left: buildArea.topLeftCoordinate.y * this.gridCellSizeInPx,
-      height: (buildArea.bottomRightCoordinate.x - buildArea.topLeftCoordinate.x + 1) * this.gridCellSizeInPx,
-      width: (buildArea.bottomRightCoordinate.y - buildArea.topLeftCoordinate.y + 1) * this.gridCellSizeInPx,
+      left: buildArea.topLeftCoordinate.x * this.gridCellSizeInPx,
+      top: buildArea.topLeftCoordinate.y * this.gridCellSizeInPx,
+      width: (buildArea.bottomRightCoordinate.x - buildArea.topLeftCoordinate.x + 1) * this.gridCellSizeInPx,
+      height: (buildArea.bottomRightCoordinate.y - buildArea.topLeftCoordinate.y + 1) * this.gridCellSizeInPx,
       fill: 'green',
       lockMovementY: true,
       lockMovementX: true,

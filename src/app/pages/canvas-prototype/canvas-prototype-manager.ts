@@ -11,7 +11,6 @@ export class CanvasPrototypeManager {
   constructor(canvasId: string, private gridCellSizeInPx: number) {
     this.canvasDrawerFacade = new CanvasDrawerFacade(canvasId, (oldCoordinate, newCoordinate) => {
       this.game.moveCellInsideBuildArea(oldCoordinate, newCoordinate);
-      console.log(this.game.getBoardAsString());
     });
     this.canvasDrawerFacade.initializeCanvas(gridCellSizeInPx);
   }
