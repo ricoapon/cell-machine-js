@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import { MenuScreenComponent } from './pages/menu-screen/menu-screen.component';
 import { CanvasPrototypeComponent } from './pages/canvas-prototype/canvas-prototype.component';
-import { CssGridPrototypeComponent } from './pages/css-grid-prototype/css-grid-prototype.component';
 import {FormsModule} from '@angular/forms';
 import {CanvasCellImageCreator} from './pages/canvas-prototype/canvas-cell-image-creator';
 
@@ -13,8 +12,7 @@ import {CanvasCellImageCreator} from './pages/canvas-prototype/canvas-cell-image
   declarations: [
     AppComponent,
     MenuScreenComponent,
-    CanvasPrototypeComponent,
-    CssGridPrototypeComponent
+    CanvasPrototypeComponent
   ],
   imports: [
     BrowserModule,
