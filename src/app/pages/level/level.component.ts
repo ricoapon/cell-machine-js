@@ -14,6 +14,7 @@ export class LevelComponent implements OnInit {
   helpText: string;
   canvasPrototypeManager: CanvasPrototypeManager;
   completedLevel = false;
+  playInterval;
 
   constructor(private route: ActivatedRoute, private router: Router) {
     this.route.params.subscribe(params => this.levelId = +params.id);
@@ -45,6 +46,20 @@ export class LevelComponent implements OnInit {
     this.completedLevel = (gameState === GameState.COMPLETED);
   }
 
+  playSteps(): void {
+    if (this.playInterval != null) {
+      clearInterval(this.playInterval);
+    }
+
+    this.playInterval = setInterval(() => {
+      const gameState = this.canvasPrototypeManager.doStep();
+      if (gameState === GameState.BLOCKED || gameState === GameState.COMPLETED) {
+        clearInterval(this.playInterval);
+      }
+      this.completedLevel = (gameState === GameState.COMPLETED);
+    }, 300);
+  }
+
   nextLevel(): void {
     // Navigate to the next level if possible. If not, go to the level selection screen.
     const nextLevelId = this.levelId + 1;
@@ -53,5 +68,10 @@ export class LevelComponent implements OnInit {
     } else {
       this.router.navigate(['/level/' + nextLevelId]);
     }
+  }
+
+  reset(): void {
+    // Easy to do with just reloading the entire page!
+    this.router.navigate(['/level/' + this.levelId]);
   }
 }
