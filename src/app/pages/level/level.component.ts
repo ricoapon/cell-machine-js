@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CanvasPrototypeManager} from '../canvas-prototype/canvas-prototype-manager';
-import {LevelStorage} from './level-storage';
+import {LevelStorage} from '../../levels/level-storage';
 import {GameState} from '../../backend/game-step-algorithm';
 
 @Component({

@@ -1,4 +1,4 @@
-import {LevelStorage} from './level-storage';
+import {LevelStorage} from '../../levels/level-storage';
 
 describe('LevelStorage', () => {
   it('returns usable level data', () => {
