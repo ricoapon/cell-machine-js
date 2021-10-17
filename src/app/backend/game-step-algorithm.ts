@@ -178,6 +178,12 @@ export class GameStepAlgorithm {
       if (loopCell.getCellType() === CellType.IMMOBILE) {
         return false;
       }
+
+      // If the next cell is an enemy, we can push.
+      if (loopCell.getCellType() === CellType.ENEMY) {
+        return true;
+      }
+
       loopCoordinate = this.determineCoordinateInDirection(loopCoordinate, direction);
 
       if (!this.board.containsCoordinate(loopCoordinate)) {

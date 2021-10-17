@@ -69,6 +69,13 @@ describe('backend/GameStepAlgorithm', () => {
     it('generates even after mover has moved away', () => {
       executeTestWithSingleStep('1/6,6/0,0-0,1/1MD1GR34x', '1/6,6/0,0-0,1/1x1GR1MD3x1MD29x');
     });
+
+    it('moves blocks into enemies', () => {
+      // Hit an enemy directly.
+      executeTestWithSingleStep('1/10,3/0,0-3,2/12x1P1GR3E13x', '1/10,3/0,0-3,2/12x1P1GR1x2E13x');
+      // Hit enemy after few blocks.
+      executeTestWithSingleStep('1/10,3/0,0-3,2/12x1P1GR3P3E10x', '1/10,3/0,0-3,2/12x1P1GR3P1x2E10x');
+    });
   });
 
   describe('GameState', () => {
