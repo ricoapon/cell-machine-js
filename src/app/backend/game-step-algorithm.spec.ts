@@ -1,12 +1,13 @@
-import {GameStepAlgorithm} from './game-step-algorithm';
+import {GameState, GameStepAlgorithm} from './game-step-algorithm';
 import {BoardSerialization} from './board-serialization';
 
 describe('backend/GameStepAlgorithm', () => {
-  function executeTestWithSingleStep(before: string, after: string): void {
+  function executeTestWithSingleStep(before: string, after: string): GameState {
     const board = BoardSerialization.deserialize(before);
     const gameStepAlgorithm = new GameStepAlgorithm(board);
-    gameStepAlgorithm.doStep();
+    const gameState = gameStepAlgorithm.doStep();
     expect(BoardSerialization.serialize(board)).toEqual(after);
+    return gameState;
   }
 
   describe('Enemy cells', () => {
@@ -67,6 +68,23 @@ describe('backend/GameStepAlgorithm', () => {
 
     it('generates even after mover has moved away', () => {
       executeTestWithSingleStep('1/6,6/0,0-0,1/1MD1GR34x', '1/6,6/0,0-0,1/1x1GR1MD3x1MD29x');
+    });
+  });
+
+  describe('GameState', () => {
+    it('is blocked when nothing can move', () => {
+      const gameState = executeTestWithSingleStep('1/6,6/0,0-2,2/5x1MR1SD4x1MR1GD5x1SD5x1SD5x1SD5x', '1/6,6/0,0-2,2/5x1MR1SD4x1MR1GD5x1SD5x1SD5x1SD5x');
+      expect(gameState).toEqual(GameState.BLOCKED);
+    });
+
+    it('is completed when all enemies have been destroyed', () => {
+      const gameState = executeTestWithSingleStep('1/8,5/0,0-3,4/29x1MR1E9x', '1/8,5/0,0-3,4/40x');
+      expect(gameState).toEqual(GameState.COMPLETED);
+    });
+
+    it('is ongoing when not blocked and not completed', () => {
+      const gameState = executeTestWithSingleStep('1/8,5/0,0-3,4/9x1MR20x1E9x', '1/8,5/0,0-3,4/10x1MR19x1E9x');
+      expect(gameState).toEqual(GameState.ONGOING);
     });
   });
 });
