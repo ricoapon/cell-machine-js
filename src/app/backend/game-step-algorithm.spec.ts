@@ -78,6 +78,18 @@ describe('backend/GameStepAlgorithm', () => {
     });
   });
 
+  describe('Slider', () => {
+    it('can be pushed in the direction and opposite direction', () => {
+      executeTestWithSingleStep('1/5,3/0,0-4,2/5x1MR1SL1SR7x', '1/5,3/0,0-4,2/6x1MR1SL1SR6x');
+      executeTestWithSingleStep('1/3,5/0,0-2,4/4x1MD2x1SU2x1SD4x', '1/3,5/0,0-2,4/7x1MD2x1SU2x1SD1x');
+    });
+
+    it('cannot be pushed in a direction orthogonal of its direction', () => {
+      executeTestWithSingleStep('1/5,3/0,0-4,2/5x1MR1SU1SD7x', '1/5,3/0,0-4,2/5x1MR1SU1SD7x');
+      executeTestWithSingleStep('1/3,5/0,0-2,4/4x1MD2x1SL2x1SR4x', '1/3,5/0,0-2,4/4x1MD2x1SL2x1SR4x');
+    });
+  });
+
   describe('GameState', () => {
     it('is blocked when nothing can move', () => {
       const gameState = executeTestWithSingleStep('1/6,6/0,0-2,2/5x1MR1SD4x1MR1GD5x1SD5x1SD5x1SD5x', '1/6,6/0,0-2,2/5x1MR1SD4x1MR1GD5x1SD5x1SD5x1SD5x');

@@ -5,7 +5,8 @@ import {
   CellWithDirection,
   createCellInstanceFromString,
   determineOppositeDirection,
-  Direction, Enemy,
+  Direction,
+  Enemy,
   Generator,
   Mover,
   rotateDirectionClockwise,
@@ -182,6 +183,13 @@ export class GameStepAlgorithm {
       // If the next cell is an enemy, we can push.
       if (loopCell.getCellType() === CellType.ENEMY) {
         return true;
+      }
+
+      // If it is a slider, we only push it if the direction is right.
+      if (loopCell.getCellType() === CellType.SLIDER &&
+        loopCell.getDirection() !== direction
+        && loopCell.getDirection() !== determineOppositeDirection(direction)) {
+        return false;
       }
 
       loopCoordinate = this.determineCoordinateInDirection(loopCoordinate, direction);
