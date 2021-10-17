@@ -3,8 +3,12 @@
 <canvas id="game-canvas">
 </canvas>
 
-<button (click)="doStep()">Do step</button>
+<button [disabled]="playInterval != null" (click)="playSteps()">Play</button>
+<button [disabled]="playInterval != null" (click)="doStep()">Single step</button>
+<button (click)="reset()">Reset</button>
 
 <br/><br/><br/>
 
 <button routerLink="/level-selection">Back</button>
+
+<button *ngIf="completedLevel" (click)="nextLevel()">Next</button>

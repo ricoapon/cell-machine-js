@@ -1,6 +1,6 @@
 import {Board, Coordinate, RectangularArea} from './board';
 import {BoardSerialization} from './board-serialization';
-import {GameStepAlgorithm} from './game-step-algorithm';
+import {GameState, GameStepAlgorithm} from './game-step-algorithm';
 import {Cell} from './cells';
 
 /**
@@ -15,8 +15,8 @@ export class Game {
   /**
    * Make all cells activate using their special rules.
    */
-  doStep(): void {
-    new GameStepAlgorithm(this.board).doStep();
+  doStep(): GameState {
+    return new GameStepAlgorithm(this.board).doStep();
   }
 
   /**

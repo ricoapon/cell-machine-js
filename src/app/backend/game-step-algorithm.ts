@@ -5,12 +5,22 @@ import {
   CellWithDirection,
   createCellInstanceFromString,
   determineOppositeDirection,
-  Direction,
+  Direction, Enemy,
   Generator,
   Mover,
   rotateDirectionClockwise,
   Rotator
 } from './cells';
+import {BoardSerialization} from './board-serialization';
+
+export enum GameState {
+  /* Indicates the next step will possibly make changes to the board. */
+  ONGOING,
+  /* Indicates the next step will not change the board, but there are still enemies. */
+  BLOCKED,
+  /* All enemies have been killed. */
+  COMPLETED
+}
 
 /**
  * Class that manipulates the board using the set rules.
@@ -20,9 +30,11 @@ export class GameStepAlgorithm {
   }
 
   /**
-   * Make all cells activate using their special rules.
+   * Make all cells activate using their special rules. Returns the state of the game.
    */
-  public doStep(): void {
+  public doStep(): GameState {
+    const beforeBoardAsString = BoardSerialization.serialize(this.board);
+
     // Execute all the cells step by step. Order:
     // 1. Generator (spawned cells do not activate this round!).
     // 2. Mover
@@ -51,6 +63,17 @@ export class GameStepAlgorithm {
         cell.isSpawnedThisRound = false;
       }
     }
+
+    // We are blocked if the game state before is identical to the game state after.
+    const afterBoardAsString = BoardSerialization.serialize(this.board);
+    if (beforeBoardAsString === afterBoardAsString) {
+      return GameState.BLOCKED;
+    }
+    // Depending on the number of enemies, we are either ongoing (> 0 enemies) or completed (0 enemies).
+    if (this.board.getCoordinatesOfCellsWithClass(Enemy).length === 0) {
+      return GameState.COMPLETED;
+    }
+    return GameState.ONGOING;
   }
 
   private doGenerator(coordinate: Coordinate): void {
@@ -155,6 +178,12 @@ export class GameStepAlgorithm {
       if (loopCell.getCellType() === CellType.IMMOBILE) {
         return false;
       }
+
+      // If the next cell is an enemy, we can push.
+      if (loopCell.getCellType() === CellType.ENEMY) {
+        return true;
+      }
+
       loopCoordinate = this.determineCoordinateInDirection(loopCoordinate, direction);
 
       if (!this.board.containsCoordinate(loopCoordinate)) {
