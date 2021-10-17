@@ -1,0 +1,11 @@
+<div class="flex flex-col content-center">
+  <div class="pb-5">
+    <h1 class="md:text-7xl text-4xl">Collections</h1>
+  </div>
+  <div class="m-auto pb-5" *ngFor="let collection of collections()">
+    <button class="" [routerLink]="collection[0]">
+      {{collection[1]}}
+    </button>
+  </div>
+  <button class="m-auto" routerLink="../">Back</button>
+</div>

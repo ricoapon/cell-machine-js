@@ -9,6 +9,7 @@ import {FormsModule} from '@angular/forms';
 import {CanvasCellImageCreator} from './pages/canvas-prototype/canvas-cell-image-creator';
 import {LevelSelectionComponent} from './pages/level-selection/level-selection.component';
 import {LevelComponent} from './pages/level/level.component';
+import { CollectionSelectionComponent } from './pages/collection-selection/collection-selection.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {LevelComponent} from './pages/level/level.component';
     MenuScreenComponent,
     CanvasPrototypeComponent,
     LevelSelectionComponent,
-    LevelComponent
+    LevelComponent,
+    CollectionSelectionComponent
   ],
   imports: [
     BrowserModule,

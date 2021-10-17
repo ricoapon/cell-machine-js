@@ -20,6 +20,15 @@ export class LevelStorageSingleton implements LevelStorage {
     return this.collectionsList.map((collection) => [collection.getIdentifier(), collection.getName()]);
   }
 
+  getCollectionName(collectionIdentifier: string): string {
+    for (const collection of this.collectionsList) {
+      if (collection.getIdentifier() === collectionIdentifier) {
+        return collection.getName();
+      }
+    }
+    return null;
+  }
+
   doesLevelExist(collectionIdentifier: string, levelNumber: number): boolean {
     const collection = this.collectionsMap.get(collectionIdentifier);
     if (collection == null) {

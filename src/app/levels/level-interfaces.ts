@@ -6,6 +6,7 @@ export interface Collection {
 
 export interface LevelStorage {
   getCollections(): Array<[string, string]>;
+  getCollectionName(collectionIdentifier: string): string;
   doesLevelExist(collectionIdentifier: string, levelNumber: number): boolean;
   getNumberOfLevels(collectionIdentifier: string): number;
   getLevelFromCollection(collectionIdentifier: string, levelNumber: number): Level;

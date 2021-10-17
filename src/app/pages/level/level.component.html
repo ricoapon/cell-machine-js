@@ -1,3 +1,4 @@
+<h1 class="md:text-7xl text-4xl text-center">{{name}}</h1>
 <h1 class="text-center" style="white-space: pre">{{helpText}}</h1>
 
 <canvas id="game-canvas">
@@ -9,6 +10,6 @@
 
 <br/><br/><br/>
 
-<button routerLink="/level-selection">Back</button>
+<button routerLink="../">Back</button>
 
 <button *ngIf="completedLevel" (click)="nextLevel()">Next</button>
