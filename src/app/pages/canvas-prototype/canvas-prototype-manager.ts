@@ -1,5 +1,6 @@
 import {Game} from '../../backend/game';
 import {CanvasDrawerFacade} from './canvas-drawer-facade';
+import {GameState} from '../../backend/game-step-algorithm';
 
 /**
  * Class to make handling the canvas easier.
@@ -31,9 +32,10 @@ export class CanvasPrototypeManager {
     }
   }
 
-  doStep(): void {
-    this.game.doStep();
+  doStep(): GameState {
+    const gameState = this.game.doStep();
     this.redrawBoard(this.game);
+    return gameState;
   }
 
   getBoardAsString(): string {

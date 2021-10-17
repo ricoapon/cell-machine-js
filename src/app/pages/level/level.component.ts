@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {CanvasPrototypeManager} from '../canvas-prototype/canvas-prototype-manager';
 import {LevelStorage} from './level-storage';
+import {GameState} from '../../backend/game-step-algorithm';
 
 @Component({
   selector: 'app-level',
@@ -12,9 +13,12 @@ export class LevelComponent implements OnInit {
   levelId: number;
   helpText: string;
   canvasPrototypeManager: CanvasPrototypeManager;
+  completedLevel = false;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private router: Router) {
     this.route.params.subscribe(params => this.levelId = +params.id);
+    // Force route reload whenever params change, otherwise the screen will not update.
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
   ngOnInit(): void {
@@ -37,6 +41,7 @@ export class LevelComponent implements OnInit {
   }
 
   doStep(): void {
-    this.canvasPrototypeManager.doStep();
+    const gameState = this.canvasPrototypeManager.doStep();
+    this.completedLevel = (gameState === GameState.COMPLETED);
   }
 }
