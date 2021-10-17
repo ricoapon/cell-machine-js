@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CanvasPrototypeManager} from '../canvas-prototype/canvas-prototype-manager';
-import {LevelStorage} from '../../levels/level-storage';
 import {GameState} from '../../backend/game-step-algorithm';
+import {LevelStorageSingleton} from '../../levels/level-storage-singleton';
 
 @Component({
   selector: 'app-level',
@@ -32,8 +32,7 @@ export class LevelComponent implements OnInit {
       return;
     }
     this.levelId = levelId;
-    const levelStorage = new LevelStorage();
-    const levelData = levelStorage.getLevelData(levelId);
+    const levelData = LevelStorageSingleton.instance.getLevelFromCollection('original', levelId);
 
     // Initialize canvas with given level.
     this.canvasPrototypeManager = new CanvasPrototypeManager('game-canvas', 50);
@@ -63,7 +62,7 @@ export class LevelComponent implements OnInit {
   nextLevel(): void {
     // Navigate to the next level if possible. If not, go to the level selection screen.
     const nextLevelId = this.levelId + 1;
-    if (new LevelStorage().getLevelData(nextLevelId) == null) {
+    if (!LevelStorageSingleton.instance.doesLevelExist('original', nextLevelId)) {
       this.router.navigate(['/level-selection']);
     } else {
       this.router.navigate(['/level/' + nextLevelId]);
