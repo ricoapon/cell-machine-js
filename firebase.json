@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "dist/cell-machine-js",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
