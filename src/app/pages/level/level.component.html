@@ -9,4 +9,4 @@
 
 <button routerLink="/level-selection">Back</button>
 
-<button *ngIf="completedLevel" [routerLink]="'/level/' + (levelId+1)">Next</button>
+<button *ngIf="completedLevel" (click)="nextLevel()">Next</button>

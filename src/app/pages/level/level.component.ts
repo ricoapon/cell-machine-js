@@ -44,4 +44,14 @@ export class LevelComponent implements OnInit {
     const gameState = this.canvasPrototypeManager.doStep();
     this.completedLevel = (gameState === GameState.COMPLETED);
   }
+
+  nextLevel(): void {
+    // Navigate to the next level if possible. If not, go to the level selection screen.
+    const nextLevelId = this.levelId + 1;
+    if (new LevelStorage().getLevelData(nextLevelId) == null) {
+      this.router.navigate(['/level-selection']);
+    } else {
+      this.router.navigate(['/level/' + nextLevelId]);
+    }
+  }
 }
