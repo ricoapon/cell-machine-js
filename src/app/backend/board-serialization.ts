@@ -100,7 +100,7 @@ export class BoardSerialization {
     const boardAsStringSplit = boardAsString.split('/');
 
     if (boardAsStringSplit.length !== 4) {
-      console.log('The length after splitting does not equal 4.');
+      console.error('The length after splitting does not equal 4.');
       return false;
     }
 
@@ -110,22 +110,22 @@ export class BoardSerialization {
     const boardCells = boardAsStringSplit[3];
 
     if (version !== SERIALIZATION_VERSION) {
-      console.log('The version is incorrect.');
+      console.error('The version is incorrect.');
       return false;
     }
 
     if (!size.match('^\\d+,\\d+$')) {
-      console.log('The size is incorrect.');
+      console.error('The size is incorrect.');
       return false;
     }
 
     if (!buildArea.match('^\\d+,\\d+-\\d+,\\d+$')) {
-      console.log('The build area is incorrect.');
+      console.error('The build area is incorrect.');
       return false;
     }
 
     if (!boardCells.match(BOARD_CELLS_REGEX)) {
-      console.log('The board cells are incorrect.');
+      console.error('The board cells are incorrect.');
       return false;
     }
 
