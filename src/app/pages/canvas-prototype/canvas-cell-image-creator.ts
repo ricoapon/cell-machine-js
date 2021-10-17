@@ -31,7 +31,7 @@ export class CanvasCellImageCreator {
         }
       };
 
-      this.initializeImageVariable(CellType.ENEMY, 'http://localhost:9876/assets/cells/enemy.svg', loaded, reject);
+      this.initializeImageVariable(CellType.ENEMY, 'assets/cells/enemy.svg', loaded, reject);
       this.initializeImageVariable(CellType.GENERATOR, 'assets/cells/generator.svg', loaded, reject);
       this.initializeImageVariable(CellType.IMMOBILE, 'assets/cells/immobile.svg', loaded, reject);
       this.initializeImageVariable(CellType.MOVER, 'assets/cells/mover.svg', loaded, reject);
