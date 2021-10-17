@@ -7,7 +7,7 @@ export class LevelStorage {
   private readonly levelDataMap = new Map([
     [1, {
       boardAsString: '1/8,5/0,0-3,4/9x1MR20x1E9x',
-      helpText: 'Drag cells in the build area. Press play to run the simulation. Destroy the enemy cells to win.'
+      helpText: 'Drag cells in the build area.\nPress play to run the simulation.\nDestroy the enemy cells to win.'
     }],
     [2, {
       boardAsString: '1/10,7/0,0-4,7/16x3E12x1MR19x1P8x1P9x',
