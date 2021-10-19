@@ -37,6 +37,10 @@ describe('backend/GameStepAlgorithm', () => {
     it('cannot move if blocked by a mover that is next to the edge', () => {
       executeTestWithSingleStep('1/6,6/0,0-0,1/6x2ML28x', '1/6,6/0,0-0,1/6x2ML28x');
     });
+
+    it('will not give execute if it was pushed into an enemy by another mover', () => {
+      executeTestWithSingleStep('1/3,3/0,0-2,2/1E2ML6x', '1/3,3/0,0-2,2/1x1ML7x');
+    });
   });
 
   describe('Rotator', () => {
@@ -79,6 +83,10 @@ describe('backend/GameStepAlgorithm', () => {
       executeTestWithSingleStep('1/10,3/0,0-3,2/12x1P1GR3E13x', '1/10,3/0,0-3,2/12x1P1GR1x2E13x');
       // Hit enemy after few blocks.
       executeTestWithSingleStep('1/10,3/0,0-3,2/12x1P1GR3P3E10x', '1/10,3/0,0-3,2/12x1P1GR3P1x2E10x');
+    });
+
+    it('will not give execute if it was pushed into an enemy by another generator', () => {
+      executeTestWithSingleStep('1/4,3/0,0-2,2/1E2GL1P8x', '1/4,3/0,0-2,2/1x1P1GL1P8x');
     });
   });
 

@@ -44,17 +44,24 @@ export class GameStepAlgorithm {
 
     // 1. Generator
     for (const generator of this.board.getCellsWithClass(Generator)) {
-      this.doGenerator(generator);
+      // It is possible for a generator to kill another generator. Make sure it is still alive before activating it.
+      if (this.isCellStillAlive(generator)) {
+        this.doGenerator(generator);
+      }
     }
 
     // 2. Rotator
     for (const rotator of this.board.getCellsWithClass(Rotator)) {
+      // No cells can be killed during rotation phase. No alive check needed.
       this.doRotator(rotator);
     }
 
     // 3. Mover
     for (const mover of this.board.getCellsWithClass(Mover)) {
-      this.doMover(mover);
+      // It is possible for a mover to kill another mover. Make sure it is still alive before activating it.
+      if (this.isCellStillAlive(mover)) {
+        this.doMover(mover);
+      }
     }
 
     // Set variable back to false to make sure next round all spawned cells can activate again.
@@ -75,6 +82,10 @@ export class GameStepAlgorithm {
       return GameState.COMPLETED;
     }
     return GameState.ONGOING;
+  }
+
+  private isCellStillAlive(cell: Cell): boolean {
+    return this.board.getCoordinate(cell) != null;
   }
 
   private doGenerator(generator: Cell): void {
