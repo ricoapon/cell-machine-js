@@ -43,18 +43,18 @@ export class GameStepAlgorithm {
     // Within each step, we move left to right, top to bottom. This is done to be consistent.
 
     // 1. Generator
-    for (const coordinate of this.board.getCoordinatesOfCellsWithClass(Generator)) {
-      this.doGenerator(coordinate);
+    for (const generator of this.board.getCellsWithClass(Generator)) {
+      this.doGenerator(generator);
     }
 
     // 2. Mover
-    for (const coordinate of this.board.getCoordinatesOfCellsWithClass(Mover)) {
-      this.doMover(coordinate);
+    for (const mover of this.board.getCellsWithClass(Mover)) {
+      this.doMover(mover);
     }
 
     // 3. Rotator
-    for (const coordinate of this.board.getCoordinatesOfCellsWithClass(Rotator)) {
-      this.doRotator(coordinate);
+    for (const rotator of this.board.getCellsWithClass(Rotator)) {
+      this.doRotator(rotator);
     }
 
     // Set variable back to false to make sure next round all spawned cells can activate again.
@@ -77,8 +77,8 @@ export class GameStepAlgorithm {
     return GameState.ONGOING;
   }
 
-  private doGenerator(coordinate: Coordinate): void {
-    const generator = this.board.getCell(coordinate);
+  private doGenerator(generator: Cell): void {
+    const coordinate = this.board.getCoordinate(generator);
     if (generator.isSpawnedThisRound) {
       return;
     }
@@ -109,8 +109,8 @@ export class GameStepAlgorithm {
     this.spawnCellInCoordinate(cellCopy, coordinateOfCopiedCell);
   }
 
-  private doMover(coordinate: Coordinate): void {
-    const mover = this.board.getCell(coordinate);
+  private doMover(mover: Cell): void {
+    const coordinate = this.board.getCoordinate(mover);
     if (mover.isSpawnedThisRound) {
       return;
     }
@@ -128,8 +128,8 @@ export class GameStepAlgorithm {
     this.board.setCell(null, coordinate);
   }
 
-  private doRotator(coordinate: Coordinate): void {
-    const rotator = this.board.getCell(coordinate);
+  private doRotator(rotator: Cell): void {
+    const coordinate = this.board.getCoordinate(rotator);
     if (rotator.isSpawnedThisRound) {
       return;
     }
