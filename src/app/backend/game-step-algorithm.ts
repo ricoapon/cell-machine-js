@@ -89,8 +89,8 @@ export class GameStepAlgorithm {
     }
 
     const cellToCopy = this.board.getCell(coordinateBehindGenerator);
-    // We don't do anything if the cell behind the generator is empty.
-    if (cellToCopy == null) {
+    // We don't do anything if the cell behind the generator is empty or if it is an enemy cell.
+    if (cellToCopy == null || cellToCopy instanceof Enemy) {
       return;
     }
 

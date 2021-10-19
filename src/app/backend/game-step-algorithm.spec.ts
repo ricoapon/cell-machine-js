@@ -62,6 +62,10 @@ describe('backend/GameStepAlgorithm', () => {
       executeTestWithSingleStep('1/3,3/0,0-0,1/3x1GU5x', '1/3,3/0,0-0,1/3x1GU5x');
     });
 
+    it('cannot generate enemies', () => {
+      executeTestWithSingleStep('1/3,3/0,0-2,2/1E1GR7x', '1/3,3/0,0-2,2/1E1GR7x');
+    });
+
     it('moves blocks before generating it', () => {
       executeTestWithSingleStep('1/6,6/0,0-0,1/1P1GR1P33x', '1/6,6/0,0-0,1/1P1GR2P32x');
     });
