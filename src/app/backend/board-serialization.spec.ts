@@ -1,6 +1,7 @@
-import {Board, Coordinate} from './board';
+import {Board} from './board/board';
 import {Direction, Enemy, Mover} from './cells';
 import {BoardSerialization} from './board-serialization';
+import {Coordinate} from './board/coordinate';
 
 describe('backend/board-serialization', () => {
   it('serialize() works.', () => {

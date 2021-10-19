@@ -1,40 +1,6 @@
-import {Cell} from './cells';
-
-export class Coordinate {
-  public readonly x: number;
-  public readonly y: number;
-
-  constructor(x: number, y: number) {
-    this.x = x;
-    this.y = y;
-  }
-
-  equals(otherCoordinate: Coordinate): boolean {
-    if (otherCoordinate == null) {
-      return false;
-    }
-    return this.x === otherCoordinate.x && this.y === otherCoordinate.y;
-  }
-
-  toString(): string {
-    return '(' + this.x + ',' + this.y + ')';
-  }
-}
-
-export class RectangularArea {
-  public readonly topLeftCoordinate: Coordinate;
-  public readonly bottomRightCoordinate: Coordinate;
-
-  constructor(topLeftCoordinate: Coordinate, bottomRightCoordinate: Coordinate) {
-    this.topLeftCoordinate = topLeftCoordinate;
-    this.bottomRightCoordinate = bottomRightCoordinate;
-  }
-
-  contains(coordinate: Coordinate): boolean {
-    return this.topLeftCoordinate.x <= coordinate.x && coordinate.x <= this.bottomRightCoordinate.x &&
-      this.topLeftCoordinate.y <= coordinate.y && coordinate.y <= this.bottomRightCoordinate.y;
-  }
-}
+import {Cell} from '../cells';
+import {Coordinate} from './coordinate';
+import {RectangularArea} from './rectangular-area';
 
 export class Board {
   public readonly width; public readonly height;

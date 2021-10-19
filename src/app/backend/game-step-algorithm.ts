@@ -1,4 +1,4 @@
-import {Board, Coordinate} from './board';
+import {Board} from './board/board';
 import {
   Cell,
   CellType,
@@ -13,6 +13,7 @@ import {
   Rotator
 } from './cells';
 import {BoardSerialization} from './board-serialization';
+import {Coordinate} from './board/coordinate';
 
 export enum GameState {
   /* Indicates the next step will possibly make changes to the board. */

@@ -1,5 +1,6 @@
-import {Board, Coordinate} from './board';
+import {Board} from './board/board';
 import {Cell, createCellInstanceFromString} from './cells';
+import {Coordinate} from './board/coordinate';
 
 const EMPTY_CELL_CHAR = 'x';
 const SERIALIZATION_VERSION = '1';

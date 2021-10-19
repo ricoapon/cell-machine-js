@@ -1,5 +1,6 @@
-import {Board, Coordinate} from './board';
-import {Direction, Enemy, Generator, Immobile, Mover, Push, Rotator, Slider} from './cells';
+import {Board} from './board';
+import {Direction, Enemy, Generator, Immobile, Mover, Push, Rotator, Slider} from '../cells';
+import {Coordinate} from './coordinate';
 
 describe('backend/Board', () => {
   it('getCoordinatesOfCellsWithClass() returns only cells with the correct type.', () => {
