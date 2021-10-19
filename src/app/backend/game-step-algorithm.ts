@@ -66,8 +66,7 @@ export class GameStepAlgorithm {
     }
 
     // Set variable back to false to make sure next round all spawned cells can activate again.
-    for (const coordinate of this.board.getAllCoordinates()) {
-      const cell = this.board.getCell(coordinate);
+    for (const [, cell] of this.board.getAllCoordinatesAndCells()) {
       if (cell != null) {
         cell.isSpawnedThisRound = false;
       }

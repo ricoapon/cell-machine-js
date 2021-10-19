@@ -42,14 +42,19 @@ export class Board {
   }
 
   /**
-   * Returns a list of all coordinates that are on the board, where the order of the coordinates is from the top left to the bottom right,
-   * left to right.
+   * Returns a list of all coordinates that are on the board with their corresponding cell (`null` if there is no cell at the location),
+   * where the order of the coordinates is from the top left to the bottom right, left to right.
    */
-  public getAllCoordinates(): Array<Coordinate> {
-    const result = new Array<Coordinate>();
+  public getAllCoordinatesAndCells(): Array<[Coordinate, Cell]> {
+    const result = new Array<[Coordinate, Cell]>();
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
-        result.push(new Coordinate(x, y));
+        // Make sure we set null instead of undefined.
+        let cell = this.grid[x][y];
+        if (cell === undefined) {
+          cell = null;
+        }
+        result.push([new Coordinate(x, y), cell]);
       }
     }
     return result;
@@ -83,8 +88,8 @@ export class Board {
    */
   public getCoordinatesOfCellsWithClass(cellClass: any): Array<Coordinate> {
     const result = new Array<Coordinate>();
-    for (const coordinate of this.getAllCoordinates()) {
-      if (this.getCell(coordinate) instanceof cellClass) {
+    for (const [coordinate, cell] of this.getAllCoordinatesAndCells()) {
+      if (cell instanceof cellClass) {
         result.push(coordinate);
       }
     }

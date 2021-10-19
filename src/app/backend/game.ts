@@ -50,11 +50,8 @@ export class Game {
     this.board.setCell(null, oldCoordinate);
   }
 
-  getCell(coordinate: Coordinate): Cell {
-    return this.board.getCell(coordinate);
-  }
-  getAllCoordinates(): Array<Coordinate> {
-    return this.board.getAllCoordinates();
+  getAllCoordinatesAndCells(): Array<[Coordinate, Cell]> {
+    return this.board.getAllCoordinatesAndCells();
   }
   getBuildArea(): BuildArea {
     return this.board.getBuildArea();

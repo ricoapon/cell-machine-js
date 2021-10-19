@@ -48,16 +48,20 @@ describe('backend/Board', () => {
     expect(board.getCellsWithClass(Rotator)).toEqual([rotator1, rotator2, rotator3]);
   });
 
-  it('getAllCoordinates() returns all coordinates from left to right and then top to bottom.', () => {
+  it('getAllCoordinatesAndCells() returns all coordinates from left to right and then top to bottom and the related cell', () => {
     const board = new Board(2, 3);
-    const result = board.getAllCoordinates();
+    const mover = new Mover(Direction.UP);
+    const rotator = new Rotator();
+    board.setCell(mover, new Coordinate(1, 1));
+    board.setCell(rotator, new Coordinate(0, 2));
+    const result = board.getAllCoordinatesAndCells();
     expect(result).toHaveSize(6);
-    expect(result[0]).toEqual(new Coordinate(0, 0));
-    expect(result[1]).toEqual(new Coordinate(1, 0));
-    expect(result[2]).toEqual(new Coordinate(0, 1));
-    expect(result[3]).toEqual(new Coordinate(1, 1));
-    expect(result[4]).toEqual(new Coordinate(0, 2));
-    expect(result[5]).toEqual(new Coordinate(1, 2));
+    expect(result[0]).toEqual([new Coordinate(0, 0), null]);
+    expect(result[1]).toEqual([new Coordinate(1, 0), null]);
+    expect(result[2]).toEqual([new Coordinate(0, 1), null]);
+    expect(result[3]).toEqual([new Coordinate(1, 1), mover]);
+    expect(result[4]).toEqual([new Coordinate(0, 2), rotator]);
+    expect(result[5]).toEqual([new Coordinate(1, 2), null]);
   });
 
   it('getAllCoordinatesRightToLeftTopToBottom() returns all coordinates from right to left and then top to bottom.', () => {
