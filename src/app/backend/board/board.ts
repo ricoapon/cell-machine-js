@@ -31,8 +31,16 @@ export class Board {
     return cell !== undefined ? cell : null;
   }
 
+  public getCoordinate(cell: Cell): Coordinate {
+    if (!this.cellMap.has(cell)) {
+      return null;
+    }
+
+    return this.cellMap.get(cell);
+  }
+
   public setCell(cell: Cell, coordinate: Coordinate): void {
-    // If the given cell is null, we are clearing the spot. This means we have to remove from the map instead of add.
+    // If we are clearing the cell, make sure to remove the cell from the map.
     if (cell == null) {
       this.cellMap.delete(this.grid[coordinate.x][coordinate.y]);
     } else {
@@ -80,28 +88,6 @@ export class Board {
    */
   public containsCoordinate(coordinate: Coordinate): boolean {
     return coordinate != null && !(coordinate.x < 0 || coordinate.x >= this.width || coordinate.y < 0 || coordinate.y >= this.height);
-  }
-
-  /**
-   * Returns a list of coordinates of all the cells that are of the given class.
-   * @param cellClass The class of the cell.
-   */
-  public getCoordinatesOfCellsWithClass(cellClass: any): Array<Coordinate> {
-    const result = new Array<Coordinate>();
-    for (const [coordinate, cell] of this.getAllCoordinatesAndCells()) {
-      if (cell instanceof cellClass) {
-        result.push(coordinate);
-      }
-    }
-    return result;
-  }
-
-  public getCoordinate(cell: Cell): Coordinate {
-    if (!this.cellMap.has(cell)) {
-      return null;
-    }
-
-    return this.cellMap.get(cell);
   }
 
   /**

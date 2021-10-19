@@ -78,7 +78,7 @@ export class GameStepAlgorithm {
       return GameState.BLOCKED;
     }
     // Depending on the number of enemies, we are either ongoing (> 0 enemies) or completed (0 enemies).
-    if (this.board.getCoordinatesOfCellsWithClass(Enemy).length === 0) {
+    if (this.board.getCellsWithClass(Enemy).length === 0) {
       return GameState.COMPLETED;
     }
     return GameState.ONGOING;
