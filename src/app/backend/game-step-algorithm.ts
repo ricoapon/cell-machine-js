@@ -37,24 +37,24 @@ export class GameStepAlgorithm {
     const beforeBoardAsString = BoardSerialization.serialize(this.board);
 
     // Execute all the cells step by step. Order:
-    // 1. Generator (spawned cells do not activate this round!).
-    // 2. Mover
-    // 3. Rotator
-    // Within each step, we move left to right, top to bottom. This is done to be consistent.
+    // 1. Generator (spawned cells do not activate this round!)
+    // 2. Rotator (first clockwise then counter-clockwise)
+    // 3. Mover
+    // Within each step, we move right to left, top to bottom. This is done to be consistent.
 
     // 1. Generator
     for (const generator of this.board.getCellsWithClass(Generator)) {
       this.doGenerator(generator);
     }
 
-    // 2. Mover
-    for (const mover of this.board.getCellsWithClass(Mover)) {
-      this.doMover(mover);
-    }
-
-    // 3. Rotator
+    // 2. Rotator
     for (const rotator of this.board.getCellsWithClass(Rotator)) {
       this.doRotator(rotator);
+    }
+
+    // 3. Mover
+    for (const mover of this.board.getCellsWithClass(Mover)) {
+      this.doMover(mover);
     }
 
     // Set variable back to false to make sure next round all spawned cells can activate again.

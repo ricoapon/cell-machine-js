@@ -34,8 +34,8 @@ describe('backend/GameStepAlgorithm', () => {
       executeTestWithSingleStep('1/6,6/0,0-0,1/16x1MR1I18x', '1/6,6/0,0-0,1/16x1MR1I18x');
     });
 
-    it('cannot move if blocked by a rotator that is next to the edge', () => {
-      executeTestWithSingleStep('1/6,6/0,0-0,1/6x1R1ML28x', '1/6,6/0,0-0,1/6x1R1MU28x');
+    it('cannot move if blocked by a mover that is next to the edge', () => {
+      executeTestWithSingleStep('1/6,6/0,0-0,1/6x2ML28x', '1/6,6/0,0-0,1/6x2ML28x');
     });
   });
 
@@ -48,9 +48,9 @@ describe('backend/GameStepAlgorithm', () => {
       executeTestWithSingleStep('1/6,6/0,0-0,1/1R1SU34x', '1/6,6/0,0-0,1/1R1SR34x');
     });
 
-    it('rotates after mover has moved', () => {
-      executeTestWithSingleStep('1/6,6/0,0-0,1/1R1MR34x', '1/6,6/0,0-0,1/1R1x1MR33x');
-      executeTestWithSingleStep('1/6,6/0,0-0,1/1x1MD4x1R29x', '1/6,6/0,0-0,1/6x1R1ML28x');
+    it('rotates before mover has moved', () => {
+      executeTestWithSingleStep('1/6,6/0,0-0,1/1R1MR34x', '1/6,6/0,0-0,1/1R6x1MD28x');
+      executeTestWithSingleStep('1/6,6/0,0-0,1/1x1MD4x1R29x', '1/6,6/0,0-0,1/6x1R1MD28x');
     });
   });
 
