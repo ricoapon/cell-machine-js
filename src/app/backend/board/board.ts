@@ -31,22 +31,14 @@ export class Board {
     return cell !== undefined ? cell : null;
   }
 
-  public setCell(cell: Cell, coordinate: Coordinate): void;
-  public setCell(cell: Cell, x: number, y: number): void;
-  public setCell(cell: Cell, x: number | Coordinate, y?: number): void {
-    if (y == null) {
-      // We called the method with x the coordinate. Change into x,y calling.
-      const coordinate = x as Coordinate;
-      y = coordinate.y;
-      x = coordinate.x;
-    }
+  public setCell(cell: Cell, coordinate: Coordinate): void {
     // If the given cell is null, we are clearing the spot. This means we have to remove from the map instead of add.
     if (cell == null) {
-      this.cellMap.delete(this.grid[x as number][y]);
+      this.cellMap.delete(this.grid[coordinate.x][coordinate.y]);
     } else {
-      this.cellMap.set(cell, new Coordinate(x as number, y));
+      this.cellMap.set(cell, coordinate);
     }
-    this.grid[x as number][y] = cell;
+    this.grid[coordinate.x][coordinate.y] = cell;
   }
 
   /**

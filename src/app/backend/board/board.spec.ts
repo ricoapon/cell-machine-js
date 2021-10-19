@@ -6,13 +6,13 @@ describe('backend/Board', () => {
   it('getCoordinatesOfCellsWithClass() returns only cells with the correct type.', () => {
     // Given a board with cells of all types.
     const board = new Board(1, 8);
-    board.setCell(new Mover(Direction.UP), 0, 0);
-    board.setCell(new Generator(Direction.UP), 0, 1);
-    board.setCell(new Rotator(), 0, 2);
-    board.setCell(new Push(), 0, 3);
-    board.setCell(new Slider(Direction.UP), 0, 4);
-    board.setCell(new Immobile(), 0, 5);
-    board.setCell(new Enemy(), 0, 6);
+    board.setCell(new Mover(Direction.UP), new Coordinate(0, 0));
+    board.setCell(new Generator(Direction.UP), new Coordinate(0, 1));
+    board.setCell(new Rotator(), new Coordinate(0, 2));
+    board.setCell(new Push(), new Coordinate(0, 3));
+    board.setCell(new Slider(Direction.UP), new Coordinate(0, 4));
+    board.setCell(new Immobile(), new Coordinate(0, 5));
+    board.setCell(new Enemy(), new Coordinate(0, 6));
 
     // When calling the method.
     const result = board.getCoordinatesOfCellsWithClass(Mover);
@@ -26,8 +26,8 @@ describe('backend/Board', () => {
     // Given a board with cells of all types.
     const board = new Board(1, 2);
     const mover = new Mover(Direction.UP);
-    board.setCell(mover, 0, 0);
-    board.setCell(new Generator(Direction.UP), 0, 1);
+    board.setCell(mover, new Coordinate(0, 0));
+    board.setCell(new Generator(Direction.UP), new Coordinate(0, 1));
 
     // When and then
     expect(board.getCoordinate(new Mover(Direction.UP))).toBeNull();
@@ -94,8 +94,8 @@ describe('backend/Board', () => {
   it('setting a cell to null will not find it again', () => {
     const board = new Board(3, 3);
     const rotator = new Rotator();
-    board.setCell(rotator, 0, 0);
-    board.setCell(null, 0, 0);
+    board.setCell(rotator, new Coordinate(0, 0));
+    board.setCell(null, new Coordinate(0, 0));
     expect(board.getCellsWithClass(Rotator)).toHaveSize(0);
   });
 
