@@ -24,10 +24,10 @@ describe('backend/board-serialization', () => {
     expect(BoardSerialization.serialize(board)).toEqual(boardAsString);
   });
 
-  it('deserialization creates different instances per cell',  () => {
+  it('deserialization creates different instances per cell', () => {
     const board = BoardSerialization.deserialize('1/3,1/0,0-0,1/2MR');
-    const cell1 = board.getCell(0, 0);
-    const cell2 = board.getCell(1, 0);
+    const cell1 = board.getCell(new Coordinate(0, 0));
+    const cell2 = board.getCell(new Coordinate(1, 0));
     expect(cell1 === cell2).toBeFalse();
   });
 });

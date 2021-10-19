@@ -84,16 +84,6 @@ describe('backend/Board', () => {
     expect(board.containsCoordinate(new Coordinate(1, 2))).toBeTrue();
   });
 
-  it('setCell() and getSell() methods with overrides work correctly.', () => {
-    const board = new Board(1, 2);
-    const firstCell = new Enemy();
-    const secondCell = new Immobile();
-    board.setCell(firstCell, new Coordinate(0, 0));
-    board.setCell(secondCell, 0, 1);
-    expect(board.getCell(0, 0)).toEqual(firstCell);
-    expect(board.getCell(new Coordinate(0, 1))).toEqual(secondCell);
-  });
-
   it('setBuildArea() and getBuildArea() works.', () => {
     const board = new Board(4, 4);
     board.setBuildArea(new Coordinate(1, 1), new Coordinate(3, 3));
@@ -107,5 +97,10 @@ describe('backend/Board', () => {
     board.setCell(rotator, 0, 0);
     board.setCell(null, 0, 0);
     expect(board.getCellsWithClass(Rotator)).toHaveSize(0);
+  });
+
+  it('getCell() returns null if there is no cell', () => {
+    const board = new Board(4, 4);
+    expect(board.getCell(new Coordinate(0, 0))).toBeNull();
   });
 });

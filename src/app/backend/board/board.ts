@@ -22,16 +22,13 @@ export class Board {
     this.buildArea = new BuildArea(new Coordinate(0, 0), new Coordinate(0, 0));
   }
 
-  public getCell(coordinate: Coordinate): Cell;
-  public getCell(x: number, y: number): Cell;
-  public getCell(x: number | Coordinate, y?: number): Cell {
-    if (y == null) {
-      // We called the method with x the coordinate. Change into x,y calling.
-      const coordinate = x as Coordinate;
-      y = coordinate.y;
-      x = coordinate.x;
-    }
-    return this.grid[x as number][y];
+  /**
+   * Returns the cell located at the given coordinate.
+   * @param coordinate The coordinate on the board.
+   */
+  public getCell(coordinate: Coordinate): Cell {
+    const cell = this.grid[coordinate.x][coordinate.y];
+    return cell !== undefined ? cell : null;
   }
 
   public setCell(cell: Cell, coordinate: Coordinate): void;

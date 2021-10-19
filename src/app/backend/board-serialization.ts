@@ -24,7 +24,7 @@ export class BoardSerialization {
       '-' + board.getBuildArea().bottomRightCoordinate.x + ',' + board.getBuildArea().bottomRightCoordinate.y;
 
     let boardCells = '';
-    let previousCellToString: string = BoardSerialization.convertCellToString(board.getCell(0, 0));
+    let previousCellToString: string = BoardSerialization.convertCellToString(board.getCell(new Coordinate(0, 0)));
     let nrOfCellsFoundInARow = 0;
     for (const coordinate of board.getAllCoordinates()) {
       const cellToString = BoardSerialization.convertCellToString(board.getCell(coordinate));
