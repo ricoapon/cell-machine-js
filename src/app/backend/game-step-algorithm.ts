@@ -12,7 +12,7 @@ import {
   rotateDirectionClockwise,
   Rotator
 } from './cells';
-import {BoardSerialization} from './board-serialization';
+import {BoardSerialization} from './board/board-serialization';
 import {Coordinate} from './board/coordinate';
 
 export enum GameState {

@@ -1,5 +1,5 @@
 import {Board} from './board/board';
-import {BoardSerialization} from './board-serialization';
+import {BoardSerialization} from './board/board-serialization';
 import {GameState, GameStepAlgorithm} from './game-step-algorithm';
 import {Cell} from './cells';
 import {Coordinate} from './board/coordinate';

@@ -1,5 +1,5 @@
 import {GameState, GameStepAlgorithm} from './game-step-algorithm';
-import {BoardSerialization} from './board-serialization';
+import {BoardSerialization} from './board/board-serialization';
 
 describe('backend/GameStepAlgorithm', () => {
   function executeTestWithSingleStep(before: string, after: string): GameState {
