@@ -2,7 +2,7 @@ import {fabric} from 'fabric';
 import {Cell, CellWithDirection, Direction} from '../../backend/cells';
 import {CanvasCellImageCreator} from './canvas-cell-image-creator';
 import {Coordinate} from '../../backend/board/coordinate';
-import {RectangularArea} from '../../backend/board/rectangular-area';
+import {BuildArea} from '../../backend/board/build-area';
 
 /**
  * Class that handles all the drawing of the canvas. Methods in this class are game-specific.
@@ -24,7 +24,7 @@ export class CanvasDrawerFacade {
   gridHeight = 6;
   canvasWidth = this.gridCellSizeInPx * this.gridWidth;
   canvasHeight = this.gridCellSizeInPx * this.gridHeight;
-  buildArea: RectangularArea;
+  buildArea: BuildArea;
 
   constructor(canvasId: string, callbackOnDragAndDrop: (oldCoordinate: Coordinate, newCoordinate: Coordinate) => void) {
     this.callbackOnDragAndDrop = callbackOnDragAndDrop;
@@ -132,7 +132,7 @@ export class CanvasDrawerFacade {
     }
   }
 
-  public drawBuildArea(buildArea: RectangularArea): void {
+  public drawBuildArea(buildArea: BuildArea): void {
     this.buildArea = buildArea;
     const buildAreaRect = new fabric.Rect({
       left: buildArea.topLeftCoordinate.x * this.gridCellSizeInPx,

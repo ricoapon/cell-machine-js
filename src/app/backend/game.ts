@@ -3,7 +3,7 @@ import {BoardSerialization} from './board-serialization';
 import {GameState, GameStepAlgorithm} from './game-step-algorithm';
 import {Cell} from './cells';
 import {Coordinate} from './board/coordinate';
-import {RectangularArea} from './board/rectangular-area';
+import {BuildArea} from './board/build-area';
 
 /**
  * The entry point of using the game. Needs to be initialized using `readBoardFromString()`.
@@ -56,7 +56,7 @@ export class Game {
   getAllCoordinates(): Array<Coordinate> {
     return this.board.getAllCoordinates();
   }
-  getBuildArea(): RectangularArea {
+  getBuildArea(): BuildArea {
     return this.board.getBuildArea();
   }
   getWidth(): number {

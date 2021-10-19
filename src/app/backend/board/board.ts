@@ -1,6 +1,6 @@
 import {Cell} from '../cells';
 import {Coordinate} from './coordinate';
-import {RectangularArea} from './rectangular-area';
+import {BuildArea} from './build-area';
 
 export class Board {
   public readonly width; public readonly height;
@@ -9,7 +9,7 @@ export class Board {
   /** Maps cells to their coordinate. This is purely to make searching coordinates cells faster. */
   private readonly cellMap: Map<Cell, Coordinate>;
   /** The editable area of the board where the player can move around cells. */
-  private buildArea: RectangularArea;
+  private buildArea: BuildArea;
 
   constructor(width: number, height: number) {
     this.width = width;
@@ -19,7 +19,7 @@ export class Board {
     for (let i = 0; i < width; i++) {
       this.grid[i] = new Array<Cell>();
     }
-    this.buildArea = new RectangularArea(new Coordinate(0, 0), new Coordinate(0, 0));
+    this.buildArea = new BuildArea(new Coordinate(0, 0), new Coordinate(0, 0));
   }
 
   public getCell(coordinate: Coordinate): Cell;
@@ -125,12 +125,12 @@ export class Board {
     return result;
   }
 
-  public getBuildArea(): RectangularArea {
+  public getBuildArea(): BuildArea {
     return this.buildArea;
   }
 
   public setBuildArea(topLeftCoordinate: Coordinate, bottomRightCoordinate: Coordinate): void {
-    this.buildArea = new RectangularArea(topLeftCoordinate, bottomRightCoordinate);
+    this.buildArea = new BuildArea(topLeftCoordinate, bottomRightCoordinate);
   }
 }
 
