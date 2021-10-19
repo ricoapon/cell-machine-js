@@ -113,6 +113,30 @@ export class Board {
     return result;
   }
 
+  public getCoordinate(cell: Cell): Coordinate {
+    for (const coordinate of this.getAllCoordinates()) {
+      if (this.getCell(coordinate) === cell) {
+        return coordinate;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Returns all cells of a given class. in the order right to left top to bottom.
+   * @param cellClass The class of the cell.
+   */
+  public getCellsWithClass(cellClass: any): Array<Cell> {
+    const result = new Array<Cell>();
+    for (const coordinate of this.getAllCoordinatesRightToLeftTopToBottom()) {
+      const cell = this.getCell(coordinate);
+      if (cell instanceof cellClass) {
+        result.push(cell);
+      }
+    }
+    return result;
+  }
+
   public getBuildArea(): RectangularArea {
     return this.buildArea;
   }

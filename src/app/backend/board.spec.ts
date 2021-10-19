@@ -21,6 +21,32 @@ describe('backend/Board', () => {
     expect(result[0]).toEqual(new Coordinate(0, 0));
   });
 
+  it('cells can be searched based on instance', () => {
+    // Given a board with cells of all types.
+    const board = new Board(1, 2);
+    const mover = new Mover(Direction.UP);
+    board.setCell(mover, 0, 0);
+    board.setCell(new Generator(Direction.UP), 0, 1);
+
+    // When and then
+    expect(board.getCoordinate(new Mover(Direction.UP))).toBeNull();
+    expect(board.getCoordinate(mover)).toEqual(new Coordinate(0, 0));
+  });
+
+  it('getCellsWithClass() returns cells from right to left top to bottom', () => {
+    // Given a board with cells of all types.
+    const board = new Board(3, 3);
+    const rotator1 = new Rotator();
+    const rotator2 = new Rotator();
+    const rotator3 = new Rotator();
+    board.setCell(rotator1, new Coordinate(2, 0));
+    board.setCell(rotator2, new Coordinate(1, 0));
+    board.setCell(rotator3, new Coordinate(2, 1));
+
+    // When and then
+    expect(board.getCellsWithClass(Rotator)).toEqual([rotator1, rotator2, rotator3]);
+  });
+
   it('getAllCoordinates() returns all coordinates from left to right and then top to bottom.', () => {
     const board = new Board(2, 3);
     const result = board.getAllCoordinates();
