@@ -110,10 +110,13 @@ export class Board {
    */
   public getCellsWithClass(cellClass: any): Array<Cell> {
     const result = new Array<Cell>();
-    for (const coordinate of this.getAllCoordinatesRightToLeftTopToBottom()) {
-      const cell = this.getCell(coordinate);
-      if (cell instanceof cellClass) {
-        result.push(cell);
+    for (let y = 0; y < this.height; y++) {
+      for (let x = this.width - 1; x >= 0; x--) {
+        const cell = this.getCell(new Coordinate(x, y));
+        if (cell instanceof cellClass) {
+          result.push(cell);
+        }
+
       }
     }
     return result;
