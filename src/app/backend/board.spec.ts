@@ -59,6 +59,18 @@ describe('backend/Board', () => {
     expect(result[5]).toEqual(new Coordinate(1, 2));
   });
 
+  it('getAllCoordinatesRightToLeftTopToBottom() returns all coordinates from right to left and then top to bottom.', () => {
+    const board = new Board(2, 3);
+    const result = board.getAllCoordinatesRightToLeftTopToBottom();
+    expect(result).toHaveSize(6);
+    expect(result[0]).toEqual(new Coordinate(1, 0));
+    expect(result[1]).toEqual(new Coordinate(0, 0));
+    expect(result[2]).toEqual(new Coordinate(1, 1));
+    expect(result[3]).toEqual(new Coordinate(0, 1));
+    expect(result[4]).toEqual(new Coordinate(1, 2));
+    expect(result[5]).toEqual(new Coordinate(0, 2));
+  });
+
   it('containsCoordinate() works correctly.', () => {
     const board = new Board(2, 3);
     expect(board.containsCoordinate(null)).toBeFalse();

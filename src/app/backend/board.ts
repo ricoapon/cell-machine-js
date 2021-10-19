@@ -92,6 +92,20 @@ export class Board {
   }
 
   /**
+   * Returns a list of all coordinates that are on the board, where the order of the coordinates is from the top right to the bottom left,
+   * right to left.
+   */
+  public getAllCoordinatesRightToLeftTopToBottom(): Array<Coordinate> {
+    const result = new Array<Coordinate>();
+    for (let y = 0; y < this.height; y++) {
+      for (let x = this.width - 1; x >= 0; x--) {
+        result.push(new Coordinate(x, y));
+      }
+    }
+    return result;
+  }
+
+  /**
    * Returns whether the coordinate exists on the board.
    * @param coordinate The coordinate to check.
    */
