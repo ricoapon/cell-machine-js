@@ -99,4 +99,12 @@ describe('backend/Board', () => {
     expect(board.getBuildArea().topLeftCoordinate).toEqual(new Coordinate(1, 1));
     expect(board.getBuildArea().bottomRightCoordinate).toEqual(new Coordinate(3, 3));
   });
+
+  it('setting a cell to null will not find it again', () => {
+    const board = new Board(3, 3);
+    const rotator = new Rotator();
+    board.setCell(rotator, 0, 0);
+    board.setCell(null, 0, 0);
+    expect(board.getCellsWithClass(Rotator)).toHaveSize(0);
+  });
 });

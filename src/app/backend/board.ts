@@ -40,6 +40,8 @@ export class Board {
   public readonly width; public readonly height;
   /** Rectangular grid with corners `grid[0][0]` (top-left) and `grid[width-1][height-1]` (bottom-right). */
   private readonly grid: Cell[][];
+  /** Maps cells to their coordinate. This is purely to make searching coordinates cells faster. */
+  private readonly cellMap: Map<Cell, Coordinate>;
   /** The editable area of the board where the player can move around cells. */
   private buildArea: RectangularArea;
 
@@ -47,6 +49,7 @@ export class Board {
     this.width = width;
     this.height = height;
     this.grid = new Array<Array<Cell>>();
+    this.cellMap = new Map<Cell, Coordinate>();
     for (let i = 0; i < width; i++) {
       this.grid[i] = new Array<Cell>();
     }
@@ -73,6 +76,12 @@ export class Board {
       const coordinate = x as Coordinate;
       y = coordinate.y;
       x = coordinate.x;
+    }
+    // If the given cell is null, we are clearing the spot. This means we have to remove from the map instead of add.
+    if (cell == null) {
+      this.cellMap.delete(this.grid[x as number][y]);
+    } else {
+      this.cellMap.set(cell, new Coordinate(x as number, y));
     }
     this.grid[x as number][y] = cell;
   }
@@ -128,12 +137,11 @@ export class Board {
   }
 
   public getCoordinate(cell: Cell): Coordinate {
-    for (const coordinate of this.getAllCoordinates()) {
-      if (this.getCell(coordinate) === cell) {
-        return coordinate;
-      }
+    if (!this.cellMap.has(cell)) {
+      return null;
     }
-    return null;
+
+    return this.cellMap.get(cell);
   }
 
   /**
