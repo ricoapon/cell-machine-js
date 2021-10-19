@@ -27,8 +27,8 @@ export class CanvasPrototypeManager {
     this.canvasDrawerFacade.clearBoard();
     this.canvasDrawerFacade.setSize(game.getWidth(), game.getHeight());
     this.canvasDrawerFacade.drawBuildArea(game.getBuildArea());
-    for (const coordinate of game.getAllCoordinates()) {
-      this.canvasDrawerFacade.drawCell(game.getCell(coordinate), coordinate, game.getBuildArea().contains(coordinate));
+    for (const [coordinate, cell] of game.getAllCoordinatesAndCells()) {
+      this.canvasDrawerFacade.drawCell(cell, coordinate, game.getBuildArea().contains(coordinate));
     }
   }
 

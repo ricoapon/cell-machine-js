@@ -1,7 +1,9 @@
-import {Board, Coordinate, RectangularArea} from './board';
-import {BoardSerialization} from './board-serialization';
+import {Board} from './board/board';
+import {BoardSerialization} from './board/board-serialization';
 import {GameState, GameStepAlgorithm} from './game-step-algorithm';
 import {Cell} from './cells';
+import {Coordinate} from './board/coordinate';
+import {BuildArea} from './board/build-area';
 
 /**
  * The entry point of using the game. Needs to be initialized using `readBoardFromString()`.
@@ -48,13 +50,10 @@ export class Game {
     this.board.setCell(null, oldCoordinate);
   }
 
-  getCell(coordinate: Coordinate): Cell {
-    return this.board.getCell(coordinate);
+  getAllCoordinatesAndCells(): Array<[Coordinate, Cell]> {
+    return this.board.getAllCoordinatesAndCells();
   }
-  getAllCoordinates(): Array<Coordinate> {
-    return this.board.getAllCoordinates();
-  }
-  getBuildArea(): RectangularArea {
+  getBuildArea(): BuildArea {
     return this.board.getBuildArea();
   }
   getWidth(): number {

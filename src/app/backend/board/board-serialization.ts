@@ -1,5 +1,6 @@
-import {Board, Coordinate} from './board';
-import {Cell, createCellInstanceFromString} from './cells';
+import {Board} from './board';
+import {Cell, createCellInstanceFromString} from '../cells';
+import {Coordinate} from './coordinate';
 
 const EMPTY_CELL_CHAR = 'x';
 const SERIALIZATION_VERSION = '1';
@@ -23,10 +24,10 @@ export class BoardSerialization {
       '-' + board.getBuildArea().bottomRightCoordinate.x + ',' + board.getBuildArea().bottomRightCoordinate.y;
 
     let boardCells = '';
-    let previousCellToString: string = BoardSerialization.convertCellToString(board.getCell(0, 0));
+    let previousCellToString: string = BoardSerialization.convertCellToString(board.getCell(new Coordinate(0, 0)));
     let nrOfCellsFoundInARow = 0;
-    for (const coordinate of board.getAllCoordinates()) {
-      const cellToString = BoardSerialization.convertCellToString(board.getCell(coordinate));
+    for (const [, cell] of board.getAllCoordinatesAndCells()) {
+      const cellToString = BoardSerialization.convertCellToString(cell);
       if (cellToString === previousCellToString) {
         nrOfCellsFoundInARow++;
       } else {
@@ -74,14 +75,14 @@ export class BoardSerialization {
     board.setBuildArea(new Coordinate(+buildAreaMatch[1], +buildAreaMatch[2]), new Coordinate(+buildAreaMatch[3], +buildAreaMatch[4]));
 
     const boardCellsMatch = boardCells.match(BOARD_SINGLE_CELL_REGEX);
-    const coordinates = board.getAllCoordinates();
+    const coordinatesAndCells = board.getAllCoordinatesAndCells();
     let count = 0;
     for (const cellAsString of boardCellsMatch) {
       const cellMatch = cellAsString.match(/^(\d+)(\w+)$/);
       const numberOfCells: number = +cellMatch[1];
 
       for (let i = 0; i < numberOfCells; i++) {
-        board.setCell(createCellInstanceFromString(cellMatch[2]), coordinates[count]);
+        board.setCell(createCellInstanceFromString(cellMatch[2]), coordinatesAndCells[count][0]);
         count++;
       }
     }

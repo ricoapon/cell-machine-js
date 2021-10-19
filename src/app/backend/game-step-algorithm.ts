@@ -1,4 +1,4 @@
-import {Board, Coordinate} from './board';
+import {Board} from './board/board';
 import {
   Cell,
   CellType,
@@ -12,7 +12,8 @@ import {
   rotateDirectionClockwise,
   Rotator
 } from './cells';
-import {BoardSerialization} from './board-serialization';
+import {BoardSerialization} from './board/board-serialization';
+import {Coordinate} from './board/coordinate';
 
 export enum GameState {
   /* Indicates the next step will possibly make changes to the board. */
@@ -65,8 +66,7 @@ export class GameStepAlgorithm {
     }
 
     // Set variable back to false to make sure next round all spawned cells can activate again.
-    for (const coordinate of this.board.getAllCoordinates()) {
-      const cell = this.board.getCell(coordinate);
+    for (const [, cell] of this.board.getAllCoordinatesAndCells()) {
       if (cell != null) {
         cell.isSpawnedThisRound = false;
       }
@@ -78,7 +78,7 @@ export class GameStepAlgorithm {
       return GameState.BLOCKED;
     }
     // Depending on the number of enemies, we are either ongoing (> 0 enemies) or completed (0 enemies).
-    if (this.board.getCoordinatesOfCellsWithClass(Enemy).length === 0) {
+    if (this.board.getCellsWithClass(Enemy).length === 0) {
       return GameState.COMPLETED;
     }
     return GameState.ONGOING;
