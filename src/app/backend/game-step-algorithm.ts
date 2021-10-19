@@ -5,7 +5,8 @@ import {
   CellWithDirection,
   createCellInstanceFromString,
   determineOppositeDirection,
-  Direction, Enemy,
+  Direction,
+  Enemy,
   Generator,
   Mover,
   rotateDirectionClockwise,
@@ -36,24 +37,31 @@ export class GameStepAlgorithm {
     const beforeBoardAsString = BoardSerialization.serialize(this.board);
 
     // Execute all the cells step by step. Order:
-    // 1. Generator (spawned cells do not activate this round!).
-    // 2. Mover
-    // 3. Rotator
-    // Within each step, we move left to right, top to bottom. This is done to be consistent.
+    // 1. Generator (spawned cells do not activate this round!)
+    // 2. Rotator (first clockwise then counter-clockwise)
+    // 3. Mover
+    // Within each step, we move right to left, top to bottom. This is done to be consistent.
 
     // 1. Generator
-    for (const coordinate of this.board.getCoordinatesOfCellsWithClass(Generator)) {
-      this.doGenerator(coordinate);
+    for (const generator of this.board.getCellsWithClass(Generator)) {
+      // It is possible for a generator to kill another generator. Make sure it is still alive before activating it.
+      if (this.isCellStillAlive(generator)) {
+        this.doGenerator(generator);
+      }
     }
 
-    // 2. Mover
-    for (const coordinate of this.board.getCoordinatesOfCellsWithClass(Mover)) {
-      this.doMover(coordinate);
+    // 2. Rotator
+    for (const rotator of this.board.getCellsWithClass(Rotator)) {
+      // No cells can be killed during rotation phase. No alive check needed.
+      this.doRotator(rotator);
     }
 
-    // 3. Rotator
-    for (const coordinate of this.board.getCoordinatesOfCellsWithClass(Rotator)) {
-      this.doRotator(coordinate);
+    // 3. Mover
+    for (const mover of this.board.getCellsWithClass(Mover)) {
+      // It is possible for a mover to kill another mover. Make sure it is still alive before activating it.
+      if (this.isCellStillAlive(mover)) {
+        this.doMover(mover);
+      }
     }
 
     // Set variable back to false to make sure next round all spawned cells can activate again.
@@ -76,8 +84,12 @@ export class GameStepAlgorithm {
     return GameState.ONGOING;
   }
 
-  private doGenerator(coordinate: Coordinate): void {
-    const generator = this.board.getCell(coordinate);
+  private isCellStillAlive(cell: Cell): boolean {
+    return this.board.getCoordinate(cell) != null;
+  }
+
+  private doGenerator(generator: Cell): void {
+    const coordinate = this.board.getCoordinate(generator);
     if (generator.isSpawnedThisRound) {
       return;
     }
@@ -88,8 +100,8 @@ export class GameStepAlgorithm {
     }
 
     const cellToCopy = this.board.getCell(coordinateBehindGenerator);
-    // We don't do anything if the cell behind the generator is empty.
-    if (cellToCopy == null) {
+    // We don't do anything if the cell behind the generator is empty or if it is an enemy cell.
+    if (cellToCopy == null || cellToCopy instanceof Enemy) {
       return;
     }
 
@@ -108,8 +120,8 @@ export class GameStepAlgorithm {
     this.spawnCellInCoordinate(cellCopy, coordinateOfCopiedCell);
   }
 
-  private doMover(coordinate: Coordinate): void {
-    const mover = this.board.getCell(coordinate);
+  private doMover(mover: Cell): void {
+    const coordinate = this.board.getCoordinate(mover);
     if (mover.isSpawnedThisRound) {
       return;
     }
@@ -127,8 +139,8 @@ export class GameStepAlgorithm {
     this.board.setCell(null, coordinate);
   }
 
-  private doRotator(coordinate: Coordinate): void {
-    const rotator = this.board.getCell(coordinate);
+  private doRotator(rotator: Cell): void {
+    const coordinate = this.board.getCoordinate(rotator);
     if (rotator.isSpawnedThisRound) {
       return;
     }
@@ -182,6 +194,13 @@ export class GameStepAlgorithm {
       // If the next cell is an enemy, we can push.
       if (loopCell.getCellType() === CellType.ENEMY) {
         return true;
+      }
+
+      // If it is a slider, we only push it if the direction is right.
+      if (loopCell.getCellType() === CellType.SLIDER &&
+        loopCell.getDirection() !== direction
+        && loopCell.getDirection() !== determineOppositeDirection(direction)) {
+        return false;
       }
 
       loopCoordinate = this.determineCoordinateInDirection(loopCoordinate, direction);

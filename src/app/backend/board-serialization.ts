@@ -79,10 +79,9 @@ export class BoardSerialization {
     for (const cellAsString of boardCellsMatch) {
       const cellMatch = cellAsString.match(/^(\d+)(\w+)$/);
       const numberOfCells: number = +cellMatch[1];
-      const cell = createCellInstanceFromString(cellMatch[2]);
 
       for (let i = 0; i < numberOfCells; i++) {
-        board.setCell(cell, coordinates[count]);
+        board.setCell(createCellInstanceFromString(cellMatch[2]), coordinates[count]);
         count++;
       }
     }

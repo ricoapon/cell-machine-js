@@ -34,8 +34,12 @@ describe('backend/GameStepAlgorithm', () => {
       executeTestWithSingleStep('1/6,6/0,0-0,1/16x1MR1I18x', '1/6,6/0,0-0,1/16x1MR1I18x');
     });
 
-    it('cannot move if blocked by a rotator that is next to the edge', () => {
-      executeTestWithSingleStep('1/6,6/0,0-0,1/6x1R1ML28x', '1/6,6/0,0-0,1/6x1R1MU28x');
+    it('cannot move if blocked by a mover that is next to the edge', () => {
+      executeTestWithSingleStep('1/6,6/0,0-0,1/6x2ML28x', '1/6,6/0,0-0,1/6x2ML28x');
+    });
+
+    it('will not give execute if it was pushed into an enemy by another mover', () => {
+      executeTestWithSingleStep('1/3,3/0,0-2,2/1E2ML6x', '1/3,3/0,0-2,2/1x1ML7x');
     });
   });
 
@@ -48,9 +52,9 @@ describe('backend/GameStepAlgorithm', () => {
       executeTestWithSingleStep('1/6,6/0,0-0,1/1R1SU34x', '1/6,6/0,0-0,1/1R1SR34x');
     });
 
-    it('rotates after mover has moved', () => {
-      executeTestWithSingleStep('1/6,6/0,0-0,1/1R1MR34x', '1/6,6/0,0-0,1/1R1x1MR33x');
-      executeTestWithSingleStep('1/6,6/0,0-0,1/1x1MD4x1R29x', '1/6,6/0,0-0,1/6x1R1ML28x');
+    it('rotates before mover has moved', () => {
+      executeTestWithSingleStep('1/6,6/0,0-0,1/1R1MR34x', '1/6,6/0,0-0,1/1R6x1MD28x');
+      executeTestWithSingleStep('1/6,6/0,0-0,1/1x1MD4x1R29x', '1/6,6/0,0-0,1/6x1R1MD28x');
     });
   });
 
@@ -60,6 +64,10 @@ describe('backend/GameStepAlgorithm', () => {
       executeTestWithSingleStep('1/2,2/0,0-0,1/3x1GU', '1/2,2/0,0-0,1/3x1GU');
       // Generator with an empty block behind it.
       executeTestWithSingleStep('1/3,3/0,0-0,1/3x1GU5x', '1/3,3/0,0-0,1/3x1GU5x');
+    });
+
+    it('cannot generate enemies', () => {
+      executeTestWithSingleStep('1/3,3/0,0-2,2/1E1GR7x', '1/3,3/0,0-2,2/1E1GR7x');
     });
 
     it('moves blocks before generating it', () => {
@@ -75,6 +83,22 @@ describe('backend/GameStepAlgorithm', () => {
       executeTestWithSingleStep('1/10,3/0,0-3,2/12x1P1GR3E13x', '1/10,3/0,0-3,2/12x1P1GR1x2E13x');
       // Hit enemy after few blocks.
       executeTestWithSingleStep('1/10,3/0,0-3,2/12x1P1GR3P3E10x', '1/10,3/0,0-3,2/12x1P1GR3P1x2E10x');
+    });
+
+    it('will not give execute if it was pushed into an enemy by another generator', () => {
+      executeTestWithSingleStep('1/4,3/0,0-2,2/1E2GL1P8x', '1/4,3/0,0-2,2/1x1P1GL1P8x');
+    });
+  });
+
+  describe('Slider', () => {
+    it('can be pushed in the direction and opposite direction', () => {
+      executeTestWithSingleStep('1/5,3/0,0-4,2/5x1MR1SL1SR7x', '1/5,3/0,0-4,2/6x1MR1SL1SR6x');
+      executeTestWithSingleStep('1/3,5/0,0-2,4/4x1MD2x1SU2x1SD4x', '1/3,5/0,0-2,4/7x1MD2x1SU2x1SD1x');
+    });
+
+    it('cannot be pushed in a direction orthogonal of its direction', () => {
+      executeTestWithSingleStep('1/5,3/0,0-4,2/5x1MR1SU1SD7x', '1/5,3/0,0-4,2/5x1MR1SU1SD7x');
+      executeTestWithSingleStep('1/3,5/0,0-2,4/4x1MD2x1SL2x1SR4x', '1/3,5/0,0-2,4/4x1MD2x1SL2x1SR4x');
     });
   });
 
