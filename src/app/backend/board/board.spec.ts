@@ -24,6 +24,10 @@ describe('backend/Board', () => {
     it('clearing cells can be done with setCell()', () => {
       const board = new Board(3, 3);
       const rotator = new Rotator();
+
+      // We expect this to not give any errors.
+      board.setCell(null, new Coordinate(0, 0));
+
       board.setCell(rotator, new Coordinate(1, 1));
       board.setCell(null, new Coordinate(1, 1));
       expect(board.getCoordinate(rotator)).toBeNull();

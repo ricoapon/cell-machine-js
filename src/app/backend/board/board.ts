@@ -40,9 +40,20 @@ export class Board {
   }
 
   public setCell(cell: Cell, coordinate: Coordinate): void {
+    const originalCell = this.grid[coordinate.x][coordinate.y];
+    if (cell == null && originalCell == null) {
+      return;
+    }
+
     // If we are clearing the cell, make sure to remove the cell from the map.
     if (cell == null) {
-      this.cellMap.delete(this.grid[coordinate.x][coordinate.y]);
+      // There are two kinds of clearing:
+      // 1. Clearing the cell from the board entirely
+      // 2. Move the cell from one coordinate to the other
+      // We only want to delete the cell from the map in the first case, which means the coordinate has not been updated yet.
+      if (this.getCoordinate(originalCell).equals(coordinate)) {
+        this.cellMap.delete(originalCell);
+      }
     } else {
       this.cellMap.set(cell, coordinate);
     }
