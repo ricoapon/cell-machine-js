@@ -1,9 +1,9 @@
 <div class="flex flex-col content-center">
   <div class="pb-5">
-    <h1 class="md:text-7xl text-4xl text-center">Levels</h1>
+    <h1 class="md:text-7xl text-4xl text-center">{{collectionName}}</h1>
   </div>
   <div class="grid grid-cols-5 gap-4">
-    <button *ngFor="let i of forOneToN(17)" [routerLink]="'/level/' + i">{{i}}</button>
+    <button *ngFor="let i of getLevelNumbers()" [routerLink]="'' + i">{{i}}</button>
   </div>
 </div>
 <br/>

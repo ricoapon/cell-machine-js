@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CanvasPrototypeManager} from '../canvas-prototype/canvas-prototype-manager';
-import {LevelStorage} from './level-storage';
 import {GameState} from '../../backend/game-step-algorithm';
+import {LevelStorageSingleton} from '../../levels/level-storage-singleton';
 
 @Component({
   selector: 'app-level',
@@ -10,14 +10,20 @@ import {GameState} from '../../backend/game-step-algorithm';
   styleUrls: ['./level.component.css']
 })
 export class LevelComponent implements OnInit {
+  collectionIdentifier: string;
   levelId: number;
+
+  name: string;
   helpText: string;
   canvasPrototypeManager: CanvasPrototypeManager;
   completedLevel = false;
   playInterval;
 
   constructor(private route: ActivatedRoute, private router: Router) {
-    this.route.params.subscribe(params => this.levelId = +params.id);
+    this.route.params.subscribe(params => {
+      this.collectionIdentifier = params.collectionIdentifier;
+      this.levelId = +params.levelId;
+    });
     // Force route reload whenever params change, otherwise the screen will not update.
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
@@ -32,13 +38,13 @@ export class LevelComponent implements OnInit {
       return;
     }
     this.levelId = levelId;
-    const levelStorage = new LevelStorage();
-    const levelData = levelStorage.getLevelData(levelId);
+    const levelData = LevelStorageSingleton.instance.getLevelFromCollection(this.collectionIdentifier, levelId);
 
     // Initialize canvas with given level.
     this.canvasPrototypeManager = new CanvasPrototypeManager('game-canvas', 50);
     this.canvasPrototypeManager.initializeFromString(levelData.boardAsString);
     this.helpText = levelData.helpText;
+    this.name = levelData.name;
   }
 
   doStep(): void {
@@ -63,15 +69,15 @@ export class LevelComponent implements OnInit {
   nextLevel(): void {
     // Navigate to the next level if possible. If not, go to the level selection screen.
     const nextLevelId = this.levelId + 1;
-    if (new LevelStorage().getLevelData(nextLevelId) == null) {
-      this.router.navigate(['/level-selection']);
+    if (!LevelStorageSingleton.instance.doesLevelExist(this.collectionIdentifier, nextLevelId)) {
+      this.router.navigate(['collection-selection/' + this.collectionIdentifier]);
     } else {
-      this.router.navigate(['/level/' + nextLevelId]);
+      this.router.navigate(['collection-selection/' + this.collectionIdentifier + '/' + nextLevelId]);
     }
   }
 
   reset(): void {
     // Easy to do with just reloading the entire page!
-    this.router.navigate(['/level/' + this.levelId]);
+    this.router.navigate(['collection-selection/' + this.collectionIdentifier + '/' + this.levelId]);
   }
 }
