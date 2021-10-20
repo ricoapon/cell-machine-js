@@ -10,6 +10,7 @@ import {CanvasCellImageCreator} from './canvas/canvas-cell-image-creator';
 import {LevelSelectionComponent} from './pages/level-selection/level-selection.component';
 import {LevelComponent} from './pages/level/level.component';
 import { CollectionSelectionComponent } from './pages/collection-selection/collection-selection.component';
+import { LevelCreatorComponent } from './pages/level-creator/level-creator.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { CollectionSelectionComponent } from './pages/collection-selection/colle
     CanvasPrototypeComponent,
     LevelSelectionComponent,
     LevelComponent,
-    CollectionSelectionComponent
+    CollectionSelectionComponent,
+    LevelCreatorComponent
   ],
   imports: [
     BrowserModule,

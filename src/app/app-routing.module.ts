@@ -5,12 +5,14 @@ import {CanvasPrototypeComponent} from './pages/canvas-prototype/canvas-prototyp
 import {LevelSelectionComponent} from './pages/level-selection/level-selection.component';
 import {LevelComponent} from './pages/level/level.component';
 import {CollectionSelectionComponent} from './pages/collection-selection/collection-selection.component';
+import {LevelCreatorComponent} from './pages/level-creator/level-creator.component';
 
 const routes: Routes = [
   {path: 'collection-selection', component: CollectionSelectionComponent},
   {path: 'collection-selection/:collectionIdentifier', component: LevelSelectionComponent},
   {path: 'collection-selection/:collectionIdentifier/:levelId', component: LevelComponent},
   {path: 'canvas', component: CanvasPrototypeComponent},
+  {path: 'level-creator', component: LevelCreatorComponent},
 
   {path: '', component: MenuScreenComponent, pathMatch: 'full'},
   {path: '**', component: MenuScreenComponent, redirectTo: ''}
