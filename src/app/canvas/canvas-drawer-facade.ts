@@ -32,15 +32,8 @@ export class CanvasDrawerFacade {
       selection: false,
       preserveObjectStacking: true,
     });
-  }
 
-  public initializeCanvas(gridCellSizeInPx: number): void {
-    // Inspired by https://codepen.io/Ben_Tran/pen/YYYwNL.
-    this.gridCellSizeInPx = gridCellSizeInPx;
-    // Background color doesn't work as a property with tailwind it seems. So we have to set it manually using FabricJS.
-    this.canvas.setBackgroundColor('white', () => {
-    });
-
+    // Place event triggers on the canvas in the constructor and not initializer, otherwise the callback will be executed multiple times.
     this.canvas.on('object:moved', (options) => {
       const original = options.transform.original;
       const oldCoordinate = this.calculateCoordinate(original.left, original.top, original.angle);
@@ -77,6 +70,14 @@ export class CanvasDrawerFacade {
 
       this.callbackOnDragAndDrop(oldCoordinate, newCoordinate);
       this.previousCallBackArguments = [oldCoordinate, newCoordinate];
+    });
+  }
+
+  public initializeCanvas(gridCellSizeInPx: number): void {
+    // Inspired by https://codepen.io/Ben_Tran/pen/YYYwNL.
+    this.gridCellSizeInPx = gridCellSizeInPx;
+    // Background color doesn't work as a property with tailwind it seems. So we have to set it manually using FabricJS.
+    this.canvas.setBackgroundColor('white', () => {
     });
   }
 
