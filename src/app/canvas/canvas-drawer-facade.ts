@@ -1,8 +1,8 @@
 import {fabric} from 'fabric';
-import {Cell, CellWithDirection, Direction} from '../../backend/cells';
+import {Cell, CellWithDirection, Direction} from '../backend/cells';
 import {CanvasCellImageCreator} from './canvas-cell-image-creator';
-import {Coordinate} from '../../backend/board/coordinate';
-import {BuildArea} from '../../backend/board/build-area';
+import {Coordinate} from '../backend/board/coordinate';
+import {BuildArea} from '../backend/board/build-area';
 
 /**
  * Class that handles all the drawing of the canvas. Methods in this class are game-specific.

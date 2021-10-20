@@ -1,5 +1,5 @@
 import {fabric} from 'fabric';
-import {CellType} from '../../backend/cells';
+import {CellType} from '../backend/cells';
 import {Image} from 'fabric/fabric-impl';
 
 /**
