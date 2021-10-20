@@ -3,9 +3,9 @@ import {CanvasDrawerFacade} from './canvas-drawer-facade';
 import {GameState} from '../backend/game-step-algorithm';
 
 /**
- * Class to make handling the canvas easier.
+ * Class with all the utilities to make drawing a game on the canvas easy.
  */
-export class CanvasPrototypeManager {
+export class CanvasFacade {
   private canvasDrawerFacade: CanvasDrawerFacade;
   private game: Game;
 

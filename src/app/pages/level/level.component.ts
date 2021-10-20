@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CanvasPrototypeManager} from '../../canvas/canvas-prototype-manager';
+import {CanvasFacade} from '../../canvas/canvas-facade';
 import {GameState} from '../../backend/game-step-algorithm';
 import {LevelStorageSingleton} from '../../levels/level-storage-singleton';
 
@@ -15,7 +15,7 @@ export class LevelComponent implements OnInit {
 
   name: string;
   helpText: string;
-  canvasPrototypeManager: CanvasPrototypeManager;
+  canvasFacade: CanvasFacade;
   completedLevel = false;
   playInterval;
 
@@ -41,14 +41,14 @@ export class LevelComponent implements OnInit {
     const levelData = LevelStorageSingleton.instance.getLevelFromCollection(this.collectionIdentifier, levelId);
 
     // Initialize canvas with given level.
-    this.canvasPrototypeManager = new CanvasPrototypeManager('game-canvas', 50);
-    this.canvasPrototypeManager.initializeFromString(levelData.boardAsString);
+    this.canvasFacade = new CanvasFacade('game-canvas', 50);
+    this.canvasFacade.initializeFromString(levelData.boardAsString);
     this.helpText = levelData.helpText;
     this.name = levelData.name;
   }
 
   doStep(): void {
-    const gameState = this.canvasPrototypeManager.doStep();
+    const gameState = this.canvasFacade.doStep();
     this.completedLevel = (gameState === GameState.COMPLETED);
   }
 
@@ -58,7 +58,7 @@ export class LevelComponent implements OnInit {
     }
 
     this.playInterval = setInterval(() => {
-      const gameState = this.canvasPrototypeManager.doStep();
+      const gameState = this.canvasFacade.doStep();
       if (gameState === GameState.BLOCKED || gameState === GameState.COMPLETED) {
         clearInterval(this.playInterval);
       }
