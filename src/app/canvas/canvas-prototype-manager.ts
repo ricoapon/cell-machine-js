@@ -1,6 +1,6 @@
-import {Game} from '../../backend/game';
+import {Game} from '../backend/game';
 import {CanvasDrawerFacade} from './canvas-drawer-facade';
-import {GameState} from '../../backend/game-step-algorithm';
+import {GameState} from '../backend/game-step-algorithm';
 
 /**
  * Class to make handling the canvas easier.

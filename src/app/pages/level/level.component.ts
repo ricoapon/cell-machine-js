@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CanvasPrototypeManager} from '../canvas-prototype/canvas-prototype-manager';
+import {CanvasPrototypeManager} from '../../canvas/canvas-prototype-manager';
 import {GameState} from '../../backend/game-step-algorithm';
 import {LevelStorageSingleton} from '../../levels/level-storage-singleton';
 

@@ -6,7 +6,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {MenuScreenComponent} from './pages/menu-screen/menu-screen.component';
 import {CanvasPrototypeComponent} from './pages/canvas-prototype/canvas-prototype.component';
 import {FormsModule} from '@angular/forms';
-import {CanvasCellImageCreator} from './pages/canvas-prototype/canvas-cell-image-creator';
+import {CanvasCellImageCreator} from './canvas/canvas-cell-image-creator';
 import {LevelSelectionComponent} from './pages/level-selection/level-selection.component';
 import {LevelComponent} from './pages/level/level.component';
 import { CollectionSelectionComponent } from './pages/collection-selection/collection-selection.component';

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CanvasPrototypeManager} from './canvas-prototype-manager';
+import {CanvasPrototypeManager} from '../../canvas/canvas-prototype-manager';
 
 @Component({
   selector: 'app-canvas-prototype',

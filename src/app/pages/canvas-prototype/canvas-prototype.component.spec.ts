@@ -1,8 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CanvasPrototypeComponent} from './canvas-prototype.component';
-import {CanvasCellImageCreator} from './canvas-cell-image-creator';
-import {ApplicationInitStatus} from '@angular/core';
+import {CanvasCellImageCreator} from '../../canvas/canvas-cell-image-creator';
 import {FormsModule} from '@angular/forms';
 
 beforeAll(async () => {
