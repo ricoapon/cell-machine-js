@@ -2,10 +2,14 @@ import {CanvasDrawerFacade} from './canvas-drawer-facade';
 import {Sandbox} from '../backend/sandbox';
 import {Coordinate} from '../backend/board/coordinate';
 import {Cell, CellWithDirection, rotateDirectionClockwise} from '../backend/cells';
+import {EventEmitter} from '@angular/core';
+import {Observable} from 'rxjs';
+
 
 export class CanvasSandboxFacade {
   private canvasDrawerFacade: CanvasDrawerFacade;
   private sandbox: Sandbox;
+  private boardAsStringEmitter = new EventEmitter<string>();
 
   constructor(canvasId: string, private gridCellSizeInPx: number) {
     this.canvasDrawerFacade = new CanvasDrawerFacade(canvasId, (oldCoordinate, newCoordinate) => {
@@ -29,6 +33,7 @@ export class CanvasSandboxFacade {
     for (const [coordinate, cell] of sandbox.getAllCoordinatesAndCells()) {
       this.canvasDrawerFacade.drawCell(cell, coordinate, true);
     }
+    this.boardAsStringEmitter.emit(this.sandbox.getBoardAsString());
   }
 
   setCell(cell: Cell, coordinate: Coordinate): void {
@@ -52,7 +57,7 @@ export class CanvasSandboxFacade {
     }
   }
 
-  getBoardAsString(): string {
-    return this.sandbox.getBoardAsString();
+  boardAsStringObservable(): Observable<string> {
+    return this.boardAsStringEmitter.asObservable();
   }
 }

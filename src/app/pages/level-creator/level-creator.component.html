@@ -1,12 +1,16 @@
-<button (click)="setOnClickFunctionToSpawnCell('MU')">M</button>
-<button (click)="setOnClickFunctionToSpawnCell('P')">P</button>
-<button (click)="setOnClickFunctionToSpawnCell('SU')">S</button>
-<button (click)="setOnClickFunctionToSpawnCell('R')">R</button>
-<button (click)="setOnClickFunctionToSpawnCell('GU')">G</button>
-<button (click)="setOnClickFunctionToSpawnCell('I')">I</button>
-<button (click)="setOnClickFunctionToSpawnCell('E')">E</button>
-<button (click)="setOnClickFunctionToRotate()">Rotate clockwise</button>
-<button (click)="setOnClickFunctionToDelete()">Delete</button>
+
+<div>
+  <button (click)="setOnClickFunctionToSpawnCell('MU')">M</button>
+  <button (click)="setOnClickFunctionToSpawnCell('P')">P</button>
+  <button (click)="setOnClickFunctionToSpawnCell('SU')">S</button>
+  <button (click)="setOnClickFunctionToSpawnCell('R')">R</button>
+  <button (click)="setOnClickFunctionToSpawnCell('GU')">G</button>
+  <button (click)="setOnClickFunctionToSpawnCell('I')">I</button>
+  <button (click)="setOnClickFunctionToSpawnCell('E')">E</button>
+  <button (click)="setOnClickFunctionToRotate()">Rotate clockwise</button>
+  <button (click)="setOnClickFunctionToDelete()">Delete</button>
+</div>
+<span>{{ currentBoardAsString }}</span>
 <canvas id="game-canvas">
 </canvas>
 <button routerLink="../">Back</button>

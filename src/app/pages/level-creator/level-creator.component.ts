@@ -10,6 +10,7 @@ import {Coordinate} from '../../backend/board/coordinate';
 })
 export class LevelCreatorComponent implements OnInit {
   canvasSandboxFacade: CanvasSandboxFacade;
+  currentBoardAsString: string;
   onClickFunction = (_: Coordinate) => {};
 
   constructor() {
@@ -17,6 +18,9 @@ export class LevelCreatorComponent implements OnInit {
 
   ngOnInit(): void {
     this.canvasSandboxFacade = new CanvasSandboxFacade('game-canvas', 50);
+    this.canvasSandboxFacade.boardAsStringObservable().subscribe((boardAsString) => {
+      this.currentBoardAsString = boardAsString;
+    });
     this.canvasSandboxFacade.initializeFromString('1/10,10/0,0-0,0/1x');
     this.canvasSandboxFacade.addMouseClickCallback((coordinate) => {
       this.onClickFunction(coordinate);
