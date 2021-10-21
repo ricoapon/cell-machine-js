@@ -1,0 +1,30 @@
+<div>
+  <input type="text" class="text-black w-72" [(ngModel)]="boardAsStringInput"/>
+  <button (click)="importBoard()">Import board</button>
+</div>
+<div>
+  <input type="number" class="text-black w-10" [(ngModel)]="width">
+  <input type="number" class="text-black w-10" [(ngModel)]="height">
+  <button (click)="changeSize()">Change size</button>
+</div>
+<div>
+  <input type="text" class="text-black w-15" [(ngModel)]="buildArea">
+  <button (click)="changeBuildArea()">Change build area</button>
+</div>
+
+<div>
+  <button (click)="setOnClickFunctionToSpawnCell('MU')">M</button>
+  <button (click)="setOnClickFunctionToSpawnCell('P')">P</button>
+  <button (click)="setOnClickFunctionToSpawnCell('SU')">S</button>
+  <button (click)="setOnClickFunctionToSpawnCell('R')">R</button>
+  <button (click)="setOnClickFunctionToSpawnCell('GU')">G</button>
+  <button (click)="setOnClickFunctionToSpawnCell('I')">I</button>
+  <button (click)="setOnClickFunctionToSpawnCell('E')">E</button>
+  <button (click)="setOnClickFunctionToRotate()">Rotate clockwise</button>
+  <button (click)="setOnClickFunctionToDelete()">Delete</button>
+  <button (click)="removeOnClickFunction()">Nothing</button>
+</div>
+<span>{{ currentBoardAsString }}</span>
+<canvas id="game-canvas">
+</canvas>
+<button routerLink="../">Back</button>

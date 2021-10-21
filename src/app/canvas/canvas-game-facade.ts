@@ -5,12 +5,12 @@ import {GameState} from '../backend/game-step-algorithm';
 /**
  * Class with all the utilities to make drawing a game on the canvas easy.
  */
-export class CanvasFacade {
+export class CanvasGameFacade {
   private canvasDrawerFacade: CanvasDrawerFacade;
   private game: Game;
 
   constructor(canvasId: string, private gridCellSizeInPx: number) {
-    this.canvasDrawerFacade = new CanvasDrawerFacade(canvasId, (oldCoordinate, newCoordinate) => {
+    this.canvasDrawerFacade = new CanvasDrawerFacade(canvasId, false, (oldCoordinate, newCoordinate) => {
       this.game.moveCellInsideBuildArea(oldCoordinate, newCoordinate);
     });
     this.canvasDrawerFacade.initializeCanvas(gridCellSizeInPx);

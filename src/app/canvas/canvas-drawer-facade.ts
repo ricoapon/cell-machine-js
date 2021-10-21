@@ -11,6 +11,7 @@ export class CanvasDrawerFacade {
   readonly canvasCellCreator = CanvasCellImageCreator.instance;
   readonly canvas: fabric.Canvas;
   private readonly callbackOnDragAndDrop: (oldCoordinate: Coordinate, newCoordinate: Coordinate) => void;
+  readonly isSandbox;
 
   /**
    * Events are triggered multiple times. To prevent callback being spammed, we ignore calls with an identical argument as the previous one.
@@ -26,28 +27,22 @@ export class CanvasDrawerFacade {
   canvasHeight = this.gridCellSizeInPx * this.gridHeight;
   buildArea: BuildArea;
 
-  constructor(canvasId: string, callbackOnDragAndDrop: (oldCoordinate: Coordinate, newCoordinate: Coordinate) => void) {
-    this.callbackOnDragAndDrop = callbackOnDragAndDrop;
+  constructor(canvasId: string, isSandbox: boolean, callbackOnDragAndDrop: (oldCoordinate: Coordinate, newCoordinate: Coordinate) => void) {
     this.canvas = new fabric.Canvas(canvasId, {
       selection: false,
       preserveObjectStacking: true,
     });
-  }
+    this.isSandbox = isSandbox;
+    this.callbackOnDragAndDrop = callbackOnDragAndDrop;
 
-  public initializeCanvas(gridCellSizeInPx: number): void {
-    // Inspired by https://codepen.io/Ben_Tran/pen/YYYwNL.
-    this.gridCellSizeInPx = gridCellSizeInPx;
-    // Background color doesn't work as a property with tailwind it seems. So we have to set it manually using FabricJS.
-    this.canvas.setBackgroundColor('white', () => {
-    });
-
+    // Place event triggers on the canvas in the constructor and not initializer, otherwise the callback will be executed multiple times.
     this.canvas.on('object:moved', (options) => {
       const original = options.transform.original;
       const oldCoordinate = this.calculateCoordinate(original.left, original.top, original.angle);
       const target = options.target;
       const newCoordinate = this.calculateCoordinate(target.left, target.top, target.angle);
 
-      if (oldCoordinate.equals(newCoordinate) || !this.buildArea.contains(newCoordinate)) {
+      if (oldCoordinate.equals(newCoordinate) || (!isSandbox && !this.buildArea.contains(newCoordinate))) {
         // The square has moved, so drag it back into its old position.
         const oldLeftTop = this.calculateAngledLeftTop(oldCoordinate, options.target.angle);
         options.target.set({
@@ -77,6 +72,29 @@ export class CanvasDrawerFacade {
 
       this.callbackOnDragAndDrop(oldCoordinate, newCoordinate);
       this.previousCallBackArguments = [oldCoordinate, newCoordinate];
+    });
+  }
+
+  public initializeCanvas(gridCellSizeInPx: number): void {
+    // Inspired by https://codepen.io/Ben_Tran/pen/YYYwNL.
+    this.gridCellSizeInPx = gridCellSizeInPx;
+    // Background color doesn't work as a property with tailwind it seems. So we have to set it manually using FabricJS.
+    this.canvas.setBackgroundColor('white', () => {
+    });
+  }
+
+  /**
+   * Let the canvas execute the callback function whenever the mouse clicks on the canvas. Use the coordinate of the click as parameter.
+   * @param callback The function to call when the mouse clicks.
+   */
+  addMouseClickCallback(callback: (coordinate: Coordinate) => void): void {
+    this.canvas.on('mouse:up', (options) => {
+      let x = Math.floor(options.pointer.x / this.gridCellSizeInPx);
+      x = Math.max(x, 0);
+      x = Math.min(x, this.gridWidth);
+      let y = Math.floor(options.pointer.y / this.gridCellSizeInPx);
+      y = Math.max(y, 0);
+      callback(new Coordinate(x, y));
     });
   }
 
