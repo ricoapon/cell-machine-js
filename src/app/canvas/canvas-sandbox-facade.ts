@@ -12,7 +12,7 @@ export class CanvasSandboxFacade {
   private boardAsStringEmitter = new EventEmitter<string>();
 
   constructor(canvasId: string, private gridCellSizeInPx: number) {
-    this.canvasDrawerFacade = new CanvasDrawerFacade(canvasId, (oldCoordinate, newCoordinate) => {
+    this.canvasDrawerFacade = new CanvasDrawerFacade(canvasId, true, (oldCoordinate, newCoordinate) => {
       this.sandbox.moveCell(oldCoordinate, newCoordinate);
     });
     this.canvasDrawerFacade.initializeCanvas(gridCellSizeInPx);

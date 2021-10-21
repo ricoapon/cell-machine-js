@@ -10,7 +10,7 @@ export class CanvasGameFacade {
   private game: Game;
 
   constructor(canvasId: string, private gridCellSizeInPx: number) {
-    this.canvasDrawerFacade = new CanvasDrawerFacade(canvasId, (oldCoordinate, newCoordinate) => {
+    this.canvasDrawerFacade = new CanvasDrawerFacade(canvasId, false, (oldCoordinate, newCoordinate) => {
       this.game.moveCellInsideBuildArea(oldCoordinate, newCoordinate);
     });
     this.canvasDrawerFacade.initializeCanvas(gridCellSizeInPx);

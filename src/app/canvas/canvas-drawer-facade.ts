@@ -11,6 +11,7 @@ export class CanvasDrawerFacade {
   readonly canvasCellCreator = CanvasCellImageCreator.instance;
   readonly canvas: fabric.Canvas;
   private readonly callbackOnDragAndDrop: (oldCoordinate: Coordinate, newCoordinate: Coordinate) => void;
+  readonly isSandbox;
 
   /**
    * Events are triggered multiple times. To prevent callback being spammed, we ignore calls with an identical argument as the previous one.
@@ -26,12 +27,13 @@ export class CanvasDrawerFacade {
   canvasHeight = this.gridCellSizeInPx * this.gridHeight;
   buildArea: BuildArea;
 
-  constructor(canvasId: string, callbackOnDragAndDrop: (oldCoordinate: Coordinate, newCoordinate: Coordinate) => void) {
-    this.callbackOnDragAndDrop = callbackOnDragAndDrop;
+  constructor(canvasId: string, isSandbox: boolean, callbackOnDragAndDrop: (oldCoordinate: Coordinate, newCoordinate: Coordinate) => void) {
     this.canvas = new fabric.Canvas(canvasId, {
       selection: false,
       preserveObjectStacking: true,
     });
+    this.isSandbox = isSandbox;
+    this.callbackOnDragAndDrop = callbackOnDragAndDrop;
 
     // Place event triggers on the canvas in the constructor and not initializer, otherwise the callback will be executed multiple times.
     this.canvas.on('object:moved', (options) => {
@@ -40,7 +42,7 @@ export class CanvasDrawerFacade {
       const target = options.target;
       const newCoordinate = this.calculateCoordinate(target.left, target.top, target.angle);
 
-      if (oldCoordinate.equals(newCoordinate) || !this.buildArea.contains(newCoordinate)) {
+      if (oldCoordinate.equals(newCoordinate) || (!isSandbox && !this.buildArea.contains(newCoordinate))) {
         // The square has moved, so drag it back into its old position.
         const oldLeftTop = this.calculateAngledLeftTop(oldCoordinate, options.target.angle);
         options.target.set({
