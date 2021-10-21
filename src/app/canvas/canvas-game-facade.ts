@@ -5,7 +5,7 @@ import {GameState} from '../backend/game-step-algorithm';
 /**
  * Class with all the utilities to make drawing a game on the canvas easy.
  */
-export class CanvasFacade {
+export class CanvasGameFacade {
   private canvasDrawerFacade: CanvasDrawerFacade;
   private game: Game;
 

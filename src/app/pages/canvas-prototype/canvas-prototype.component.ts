@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CanvasFacade} from '../../canvas/canvas-facade';
+import {CanvasGameFacade} from '../../canvas/canvas-game-facade';
 
 @Component({
   selector: 'app-canvas-prototype',
@@ -7,7 +7,7 @@ import {CanvasFacade} from '../../canvas/canvas-facade';
   styleUrls: ['./canvas-prototype.component.css']
 })
 export class CanvasPrototypeComponent implements OnInit {
-  canvasFacade: CanvasFacade;
+  canvasFacade: CanvasGameFacade;
   boardAsStringInput = '1/6,6/0,0-2,2/1x1MD2x1ML1x1R29x';
   currentBoardAsString = '1/6,6/0,0-2,2/1x1MD2x1ML1x1R29x';
 
@@ -15,7 +15,7 @@ export class CanvasPrototypeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.canvasFacade = new CanvasFacade('game-canvas', 50);
+    this.canvasFacade = new CanvasGameFacade('game-canvas', 50);
     this.initializeGame();
   }
 

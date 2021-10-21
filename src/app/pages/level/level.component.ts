@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CanvasFacade} from '../../canvas/canvas-facade';
+import {CanvasGameFacade} from '../../canvas/canvas-game-facade';
 import {GameState} from '../../backend/game-step-algorithm';
 import {LevelStorageSingleton} from '../../levels/level-storage-singleton';
 
@@ -15,7 +15,7 @@ export class LevelComponent implements OnInit {
 
   name: string;
   helpText: string;
-  canvasFacade: CanvasFacade;
+  canvasFacade: CanvasGameFacade;
   completedLevel = false;
   playInterval;
 
@@ -41,7 +41,7 @@ export class LevelComponent implements OnInit {
     const levelData = LevelStorageSingleton.instance.getLevelFromCollection(this.collectionIdentifier, levelId);
 
     // Initialize canvas with given level.
-    this.canvasFacade = new CanvasFacade('game-canvas', 50);
+    this.canvasFacade = new CanvasGameFacade('game-canvas', 50);
     this.canvasFacade.initializeFromString(levelData.boardAsString);
     this.helpText = levelData.helpText;
     this.name = levelData.name;
