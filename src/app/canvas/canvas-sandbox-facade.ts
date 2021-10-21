@@ -41,6 +41,11 @@ export class CanvasSandboxFacade {
     this.redrawBoard();
   }
 
+  setBuildArea(topLeftCoordinate: Coordinate, bottomRightCoordinate: Coordinate): void {
+    this.sandbox.setBuildArea(topLeftCoordinate, bottomRightCoordinate);
+    this.redrawBoard();
+  }
+
   addMouseClickCallback(callback: (coordinate: Coordinate) => void): void {
     this.canvasDrawerFacade.addMouseClickCallback(callback);
   }

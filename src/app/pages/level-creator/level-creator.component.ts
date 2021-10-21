@@ -11,6 +11,9 @@ import {Coordinate} from '../../backend/board/coordinate';
 export class LevelCreatorComponent implements OnInit {
   canvasSandboxFacade: CanvasSandboxFacade;
   currentBoardAsString: string;
+  width: number;
+  height: number;
+  buildArea: string;
   onClickFunction = (_: Coordinate) => {};
 
   constructor() {
@@ -22,6 +25,9 @@ export class LevelCreatorComponent implements OnInit {
       this.currentBoardAsString = boardAsString;
     });
     this.canvasSandboxFacade.initializeFromString('1/10,10/0,0-0,0/1x');
+    this.width = 10;
+    this.height = 10;
+    this.buildArea = '0,0-0,0';
     this.canvasSandboxFacade.addMouseClickCallback((coordinate) => {
       this.onClickFunction(coordinate);
     });
@@ -43,5 +49,17 @@ export class LevelCreatorComponent implements OnInit {
     this.onClickFunction = (coordinate) => {
       this.canvasSandboxFacade.setCell(null, coordinate);
     };
+  }
+
+  changeSize(): void {
+    const size = this.width + ',' + this.height;
+    this.canvasSandboxFacade.initializeFromString('1/' + size + '/0,0-0,0/1x');
+  }
+
+  changeBuildArea(): void {
+    const buildAreaMatch = this.buildArea.match('^(\\d+),(\\d+)-(\\d+),(\\d+)$');
+    this.canvasSandboxFacade.setBuildArea(
+      new Coordinate(+buildAreaMatch[1], +buildAreaMatch[2]),
+      new Coordinate(+buildAreaMatch[3], +buildAreaMatch[4]));
   }
 }

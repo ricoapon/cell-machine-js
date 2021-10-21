@@ -1,3 +1,12 @@
+<div>
+  <input type="number" class="text-black w-10" [(ngModel)]="width">
+  <input type="number" class="text-black w-10" [(ngModel)]="height">
+  <button (click)="changeSize()">Change size</button>
+</div>
+<div>
+  <input type="text" class="text-black w-15" [(ngModel)]="buildArea">
+  <button (click)="changeBuildArea()">Change build area</button>
+</div>
 
 <div>
   <button (click)="setOnClickFunctionToSpawnCell('MU')">M</button>
