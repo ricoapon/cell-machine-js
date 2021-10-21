@@ -15,7 +15,8 @@ export class LevelCreatorComponent implements OnInit {
   height: number;
   buildArea: string;
   boardAsStringInput: string;
-  onClickFunction = (_: Coordinate) => {};
+  onClickFunction = (_ => {
+  });
 
   constructor() {
   }
@@ -66,5 +67,10 @@ export class LevelCreatorComponent implements OnInit {
 
   importBoard(): void {
     this.canvasSandboxFacade.initializeFromString(this.boardAsStringInput);
+  }
+
+  removeOnClickFunction(): void {
+    this.onClickFunction = (_ => {
+    });
   }
 }
