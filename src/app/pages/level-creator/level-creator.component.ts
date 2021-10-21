@@ -14,6 +14,7 @@ export class LevelCreatorComponent implements OnInit {
   width: number;
   height: number;
   buildArea: string;
+  boardAsStringInput: string;
   onClickFunction = (_: Coordinate) => {};
 
   constructor() {
@@ -61,5 +62,9 @@ export class LevelCreatorComponent implements OnInit {
     this.canvasSandboxFacade.setBuildArea(
       new Coordinate(+buildAreaMatch[1], +buildAreaMatch[2]),
       new Coordinate(+buildAreaMatch[3], +buildAreaMatch[4]));
+  }
+
+  importBoard(): void {
+    this.canvasSandboxFacade.initializeFromString(this.boardAsStringInput);
   }
 }

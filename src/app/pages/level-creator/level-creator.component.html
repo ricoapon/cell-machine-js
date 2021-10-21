@@ -1,4 +1,8 @@
 <div>
+  <input type="text" class="text-black w-72" [(ngModel)]="boardAsStringInput"/>
+  <button (click)="importBoard()">Import board</button>
+</div>
+<div>
   <input type="number" class="text-black w-10" [(ngModel)]="width">
   <input type="number" class="text-black w-10" [(ngModel)]="height">
   <button (click)="changeSize()">Change size</button>
