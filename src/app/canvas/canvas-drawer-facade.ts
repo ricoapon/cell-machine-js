@@ -81,6 +81,21 @@ export class CanvasDrawerFacade {
     });
   }
 
+  /**
+   * Let the canvas execute the callback function whenever the mouse clicks on the canvas. Use the coordinate of the click as parameter.
+   * @param callback The function to call when the mouse clicks.
+   */
+  addMouseClickCallback(callback: (coordinate: Coordinate) => void): void {
+    this.canvas.on('mouse:up', (options) => {
+      let x = Math.floor(options.pointer.x / this.gridCellSizeInPx);
+      x = Math.max(x, 0);
+      x = Math.min(x, this.gridWidth);
+      let y = Math.floor(options.pointer.y / this.gridCellSizeInPx);
+      y = Math.max(y, 0);
+      callback(new Coordinate(x, y));
+    });
+  }
+
   private calculateCoordinate(left: number, top: number, angle: number): Coordinate {
     // Because of the angle, left and top are skewed. Fix this by creating a rectangle in memory and rotating it back.
     const boundaryRect = new fabric.Rect({left, top, angle, width: this.gridCellSizeInPx, height: this.gridCellSizeInPx});
