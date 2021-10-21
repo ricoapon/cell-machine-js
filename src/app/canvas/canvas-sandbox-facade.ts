@@ -14,6 +14,7 @@ export class CanvasSandboxFacade {
   constructor(canvasId: string, private gridCellSizeInPx: number) {
     this.canvasDrawerFacade = new CanvasDrawerFacade(canvasId, true, (oldCoordinate, newCoordinate) => {
       this.sandbox.moveCell(oldCoordinate, newCoordinate);
+      this.redrawBoard();
     });
     this.canvasDrawerFacade.initializeCanvas(gridCellSizeInPx);
   }
