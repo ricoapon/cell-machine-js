@@ -16,12 +16,28 @@ export class Starter implements Collection {
         helpText: 'Drag cells in the build area.\nPress play to run the simulation.\nDestroy the enemy cells to win.'
       },
       {
+        boardAsString: '1/8,5/0,0-3,4/11x1MU10x1E2x1R14x',
+        helpText: 'The rotator cell spins cells next to it.'
+      },
+      {
         boardAsString: '1/10,7/0,0-4,7/16x3E12x1MR19x1P8x1P9x',
         helpText: 'Most cells can be pushed by others.'
       },
       {
-        boardAsString: '1/8,5/0,0-3,4/11x1MU10x1E2x1R14x',
-        helpText: 'The rotator cell spins cells next to it.'
+        boardAsString: '1/8,8/0,4-3,7/4I1E3x4I4x4I4x4I4x1R8x1ML9x1ML12x',
+        helpText: 'Can you move a rotated cell?'
+      },
+      {
+        boardAsString: '1/9,8/4,4-8,7/3x1E5I4x5I4x5I4x5I5x1R9x1ML16x1ML',
+        helpText: 'Now the other way around...'
+      },
+      {
+        boardAsString: '1/12,5/3,0-8,4/3x1ML4x1P15x1E4x2R4x1E15x1P4x1P3x',
+        helpText: 'How fast can you turn around?'
+      },
+      {
+        boardAsString: '1/13,10/0,0-4,9/26x5MU18x1E12x1E12x1E12x1E2x1R4P34x',
+        helpText: 'How much cells can you rotate?'
       },
       {
         boardAsString: '1/10,3/0,0-3,2/12x1P4x3E1x1GR8x',
