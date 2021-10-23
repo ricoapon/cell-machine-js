@@ -1,6 +1,7 @@
 import {Level, LevelStorage} from './level-interfaces';
 import {Starter} from './collections/starter';
 import {Intermediate} from './collections/intermediate';
+import {DukeNukem} from './collections/duke-nukem';
 
 export class LevelStorageSingleton implements LevelStorage {
   public static readonly instance = new LevelStorageSingleton();
@@ -11,7 +12,8 @@ export class LevelStorageSingleton implements LevelStorage {
   // This list must be ordered in the way it needs to be shown on the screen.
   private readonly collectionsList = [
     new Starter(),
-    new Intermediate()
+    new Intermediate(),
+    new DukeNukem(),
   ];
 
   private readonly collectionsMap = new Map(this.collectionsList.map(collection => [collection.getIdentifier(), collection]));
