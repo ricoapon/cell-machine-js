@@ -10,6 +10,6 @@ describe('LevelStorage', () => {
   it('number of levels is correct', () => {
     expect(LevelStorageSingleton.instance.doesLevelExist('starter', 0)).toEqual(false);
     expect(LevelStorageSingleton.instance.doesLevelExist('starter', 20)).toEqual(false);
-    expect(LevelStorageSingleton.instance.getNumberOfLevels('starter')).toEqual(9);
+    expect(LevelStorageSingleton.instance.getNumberOfLevels('starter')).toEqual(13);
   });
 });
